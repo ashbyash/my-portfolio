@@ -13,6 +13,6 @@
 - **Insights**: `lesson_learned`
 
 ## ✍️ Writing Style
-- **Identity**: Seunghwan Ahn (Senior Product Manager).
+- **Identity**: Seunghwan An (Product Manager).
 - **Metric-First**: Always prioritize showing quantitative results (%, $, counts).
 - **Role**: Focus on "Technical Intervention," "Efficiency," and "Problem Solving."
