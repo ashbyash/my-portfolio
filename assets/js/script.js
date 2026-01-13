@@ -267,11 +267,11 @@ function renderExperience() {
   container.innerHTML = resumeData.experience.map((item, index, array) => {
     console.log('Rendering experience item:', item);
     return `
-    <li class="relative pb-5 ${index !== array.length - 1 ? 'before:content-[""] before:absolute before:top-0 before:-left-[30px] before:w-px before:h-full before:bg-apple-border' : ''} after:content-[""] after:absolute after:top-[5px] after:-left-[33px] after:h-2 after:w-2 after:bg-apple-blue after:rounded-full after:shadow-[0_0_0_4px_#FFFFFF,0_0_0_5px_#D2D2D7]">
-      <h4 class="text-base leading-[1.3] mb-[7px] text-apple-text-primary">${item.title || ''}</h4>
-      <span class="text-apple-blue font-normal leading-[1.6] block mb-2">${item.period || ''}</span>
-      <p class="text-apple-text-secondary font-light leading-[1.6]">
-        <strong class="text-apple-text-primary font-medium">${item.company || ''}</strong><br>
+    <li class="relative mb-12 pb-5 ${index !== array.length - 1 ? 'before:content-[""] before:absolute before:top-0 before:-left-[30px] before:w-px before:h-full before:bg-apple-border' : ''} after:content-[""] after:absolute after:top-[5px] after:-left-[33px] after:h-2 after:w-2 after:bg-apple-blue after:rounded-full after:shadow-[0_0_0_4px_#FFFFFF,0_0_0_5px_#D2D2D7]">
+      <h4 class="text-apple-text-primary font-bold text-lg mb-0.5">${item.company || ''}</h4>
+      <div class="text-apple-text-primary font-medium text-base mb-1 block">${item.title || ''}</div>
+      <span class="text-sm text-apple-blue font-medium mb-2 block">${item.period || ''}</span>
+      <p class="whitespace-pre-line text-apple-text-secondary font-light leading-relaxed mt-0 mb-0">
         ${item.description || ''}
       </p>
     </li>
@@ -297,12 +297,12 @@ function renderEducation() {
   }
 
   container.innerHTML = (resumeData.education || []).map(item => `
-    <li class="timeline-item">
+    <li class="timeline-item mb-10">
       <h4 class="h4 timeline-item-title text-apple-text-primary">${item.school}</h4>
       <span class="text-apple-blue">${item.period}</span>
-      <p class="timeline-text text-apple-text-secondary">
-        ${item.degree ? `<strong class="text-apple-text-primary">${item.degree}</strong><br>` : ''}
-        ${item.major ? `${item.major}<br>` : ''}
+      <p class="timeline-text text-apple-text-secondary leading-relaxed">
+        ${item.degree ? `<strong class="block mb-1 text-apple-text-primary">${item.degree}</strong>` : ''}
+        ${item.major ? `<span class="block mb-1">${item.major}</span>` : ''}
         ${item.description || ''}
       </p>
     </li>
@@ -349,66 +349,72 @@ function renderProfile() {
       avatarPath = './' + avatarPath;
     }
     
-    console.log('Loading profile image from:', avatarPath);
-    profileAvatar.src = avatarPath;
-    profileAvatar.alt = profileData.name || 'Profile';
+    // Alternative paths to try
+    const alternatives = [
+      avatarPath,
+      './assets/images/my-avatar.png',
+      './assets/images/anseunghwan-profile-github.JPG',
+      'assets/images/anseunghwan-profile-github.JPG'
+    ];
     
-    // Ensure image is visible
-    profileAvatar.style.display = 'block';
+    // Remove duplicates while preserving order
+    const uniquePaths = [...new Set(alternatives)];
     
-    // Handle image load errors
-    profileAvatar.onerror = function() {
-      console.error('Failed to load profile image:', avatarPath);
-      // Try alternative paths
-      const alternatives = [
-        './assets/images/my-avatar.png',
-        'assets/images/anseunghwan-profile-github.JPG',
-        './assets/images/anseunghwan-profile-github.JPG'
-      ];
+    let currentIndex = 0;
+    let isTryingAlternatives = false;
+    
+    // Function to try loading next image path
+    const tryLoadImage = (pathIndex) => {
+      if (pathIndex >= uniquePaths.length) {
+        // All paths failed, show initials
+        console.warn('All image paths failed, showing initials');
+        profileAvatar.style.display = 'none';
+        const avatarBox = profileAvatar.closest('figure');
+        if (avatarBox && !avatarBox.querySelector('.avatar-initials')) {
+          const initials = document.createElement('div');
+          initials.className = 'avatar-initials';
+          initials.textContent = getInitials(profileData.name || '');
+          initials.style.cssText = 'display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; font-size: 24px; font-weight: 600; color: #1D1D1F; background: #F5F5F7; border-radius: 20px;';
+          avatarBox.appendChild(initials);
+        }
+        return;
+      }
       
-      let triedPaths = [avatarPath];
-      let currentIndex = 0;
+      const pathToTry = uniquePaths[pathIndex];
+      console.log(`Trying to load profile image (${pathIndex + 1}/${uniquePaths.length}):`, pathToTry);
       
-      const tryNextPath = () => {
-        if (currentIndex < alternatives.length) {
-          const altPath = alternatives[currentIndex];
-          if (!triedPaths.includes(altPath)) {
-            triedPaths.push(altPath);
-            console.log('Trying alternative path:', altPath);
-            this.src = altPath;
-            currentIndex++;
-          } else {
-            currentIndex++;
-            tryNextPath();
-          }
-        } else {
-          // All paths failed, show initials
-          console.warn('All image paths failed, showing initials');
-          this.style.display = 'none';
-          const avatarBox = this.closest('.avatar-box');
-          if (avatarBox && !avatarBox.querySelector('.avatar-initials')) {
-            const initials = document.createElement('div');
-            initials.className = 'avatar-initials';
-            initials.textContent = getInitials(profileData.name || '');
-            initials.style.cssText = 'display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; font-size: 24px; font-weight: 600; color: var(--white-2);';
-            avatarBox.appendChild(initials);
+      // Remove previous error handler to prevent infinite loop
+      profileAvatar.onerror = null;
+      
+      // Set up one-time error handler
+      profileAvatar.onerror = function() {
+        console.error(`Failed to load profile image: ${pathToTry}`);
+        // Try next path
+        tryLoadImage(pathIndex + 1);
+      };
+      
+      // Set up load handler
+      profileAvatar.onload = function() {
+        console.log('Profile image loaded successfully:', this.src);
+        this.style.display = 'block';
+        this.onerror = null; // Remove error handler after successful load
+        const avatarBox = this.closest('figure');
+        if (avatarBox) {
+          const initials = avatarBox.querySelector('.avatar-initials');
+          if (initials) {
+            initials.remove();
           }
         }
       };
       
-      // Try next alternative path
-      tryNextPath();
+      // Try to load the image
+      profileAvatar.src = pathToTry;
+      profileAvatar.alt = profileData.name || 'Profile';
+      profileAvatar.style.display = 'block';
     };
     
-    // Ensure image is visible when loaded successfully
-    profileAvatar.onload = function() {
-      console.log('Profile image loaded successfully:', this.src);
-      this.style.display = 'block';
-      const initials = this.closest('.avatar-box')?.querySelector('.avatar-initials');
-      if (initials) {
-        initials.remove();
-      }
-    };
+    // Start loading from first path
+    tryLoadImage(0);
   }
 
   // Update profile name
