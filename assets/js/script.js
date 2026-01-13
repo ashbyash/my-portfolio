@@ -158,13 +158,26 @@ function renderExperience() {
   const container = document.getElementById('experience-list');
   if (!container) return;
 
+  // Ensure it's an ol element with timeline-list class
+  if (container.tagName !== 'OL') {
+    const ol = document.createElement('ol');
+    ol.className = 'timeline-list';
+    ol.id = 'experience-list';
+    container.parentNode.replaceChild(ol, container);
+    container = ol;
+  } else {
+    container.className = 'timeline-list';
+  }
+
   container.innerHTML = (resumeData.experience || []).map(item => `
-    <div class="border-l-2 border-gray-200 pl-4">
-      <p class="text-sm text-gray-500">${item.period}</p>
-      <h3 class="text-lg font-semibold text-gray-900">${item.title}</h3>
-      <p class="text-sm text-gray-600">${item.company}</p>
-      <p class="text-sm text-gray-600 mt-2 leading-relaxed">${item.description}</p>
-    </div>
+    <li class="timeline-item">
+      <h4 class="h4 timeline-item-title">${item.title}</h4>
+      <span>${item.period}</span>
+      <p class="timeline-text">
+        <strong>${item.company}</strong><br>
+        ${item.description}
+      </p>
+    </li>
   `).join('');
 }
 
@@ -172,14 +185,27 @@ function renderEducation() {
   const container = document.getElementById('education-list');
   if (!container) return;
 
+  // Ensure it's an ol element with timeline-list class
+  if (container.tagName !== 'OL') {
+    const ol = document.createElement('ol');
+    ol.className = 'timeline-list';
+    ol.id = 'education-list';
+    container.parentNode.replaceChild(ol, container);
+    container = ol;
+  } else {
+    container.className = 'timeline-list';
+  }
+
   container.innerHTML = (resumeData.education || []).map(item => `
-    <div class="rounded-xl border border-gray-200 p-4 shadow-sm bg-white">
-      <div class="flex items-center justify-between text-sm text-gray-500 mb-1">
-        <span>${item.school}</span>
-        <span>${item.period}</span>
-      </div>
-      <p class="text-sm text-gray-700">${item.description}</p>
-    </div>
+    <li class="timeline-item">
+      <h4 class="h4 timeline-item-title">${item.school}</h4>
+      <span>${item.period}</span>
+      <p class="timeline-text">
+        ${item.degree ? `<strong>${item.degree}</strong><br>` : ''}
+        ${item.major ? `${item.major}<br>` : ''}
+        ${item.description || ''}
+      </p>
+    </li>
   `).join('');
 }
 
@@ -187,16 +213,18 @@ function renderSkills() {
   const container = document.getElementById('skills-list');
   if (!container) return;
 
+  container.className = 'skills-list content-card';
   container.innerHTML = (resumeData.skills || []).map(skill => `
-    <div>
-      <div class="flex items-center justify-between text-sm text-gray-700 mb-1">
-        <span>${skill.name}</span>
-        <span>${skill.value}%</span>
+    <li class="skills-item">
+      <div class="title-wrapper">
+        <h5 class="h5">${skill.name}</h5>
+        <data value="${skill.value}">${skill.value}%</data>
       </div>
-      <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
-        <div class="h-full bg-gray-900 rounded-full" style="width:${skill.value}%"></div>
+      <div class="skill-progress-bg">
+        <div class="skill-progress-fill" style="width: ${skill.value}%;"></div>
       </div>
-    </div>
+      ${skill.description ? `<p class="skill-description" style="margin-top: 8px; font-size: 13px; color: hsl(0, 0%, 60%); line-height: 1.5;">${skill.description}</p>` : ''}
+    </li>
   `).join('');
 }
 

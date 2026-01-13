@@ -1,57 +1,74 @@
 {
   "experience": [
     {
-      "title": "Creative Director",
-      "company": "Freelance",
-      "period": "2015 — Present",
-      "description": "제품 전략 수립부터 실행까지 전 과정을 총괄하며 크로스펑셔널 팀을 리딩했습니다."
+      "title": "Product Manager",
+      "company": "CLASSUM",
+      "period": "2025.06 — Present",
+      "description": "전사 제품 전략 수립 및 주요 지표 개선을 리딩하고 있습니다."
     },
     {
-      "title": "Art Director",
-      "company": "Studio Nova",
-      "period": "2013 — 2015",
-      "description": "브랜드 아이덴티티와 UI 시스템을 구축해 신규 서비스 출시를 지원했습니다."
+      "title": "Product Division | Product Manager",
+      "company": "모던라이언(주)",
+      "period": "2022.06 — 2024.11",
+      "description": "NFT 마켓플레이스 및 신규 비즈니스 모델의 제품 기획과 운영을 담당했습니다."
     },
     {
-      "title": "Web Designer",
-      "company": "Pixel Lab",
-      "period": "2010 — 2013",
-      "description": "반응형 웹 프로젝트를 다수 수행하며 디자인 시스템과 프로토타입 제작을 담당했습니다."
+      "title": "사업 운영팀 | Growth Product Manager & Performance Marketer",
+      "company": "(주)리퀴드네이션",
+      "period": "2021.03 — 2022.06",
+      "description": "제품 성장 지표 분석 및 퍼포먼스 마케팅 최적화를 통해 사용자 획득 효율을 개선했습니다."
+    },
+    {
+      "title": "브릭투웍스 사업운영실 | 마케터",
+      "company": "크레비스파트너스(주)",
+      "period": "2019.12 — 2020.07",
+      "description": "사업 운영 지원 및 마케팅 캠페인 실행을 통한 브랜드 인지도 향상을 경험했습니다."
     }
   ],
   "education": [
     {
-      "school": "University School of the Arts",
-      "period": "2007 — 2008",
-      "description": "Interaction Design · HCI · Cognitive Psychology"
-    },
-    {
-      "school": "New York Academy of Art",
-      "period": "2006 — 2007",
-      "description": "Visual Narrative · Editorial Systems"
-    },
-    {
-      "school": "High School of Art & Design",
-      "period": "2002 — 2004",
-      "description": "Industrial Design · Typography Fundamentals"
+      "school": "건국대학교 (Konkuk University)",
+      "degree": "학사 (Bachelor's Degree)",
+      "major": "일어교육학 (Japanese Language Education)",
+      "period": "2012 — 2019",
+      "description": "일어교육학 전공"
     }
   ],
   "skills": [
     {
-      "name": "Product Strategy",
-      "value": 90
+      "name": "PostgreSQL",
+      "value": 70,
+      "description": "테이블 join을 통해 유저 전환 데이터 분석"
     },
     {
-      "name": "Experience Design",
-      "value": 85
+      "name": "Google Spreadsheet",
+      "value": 80,
+      "description": "함수를 통한 유저 데이터 분석 및 외부 툴 연동 리포트 작성"
     },
     {
-      "name": "Stakeholder Management",
-      "value": 80
+      "name": "Figjam",
+      "value": 75,
+      "description": "유저 플로우 차트 및 스토리보드 제작"
     },
     {
-      "name": "Data Analysis",
-      "value": 75
+      "name": "Amplitude",
+      "value": 70,
+      "description": "Time to Convert 분석 및 고객군별 이벤트 차이 분석"
+    },
+    {
+      "name": "Google Analytics",
+      "value": 65,
+      "description": "트래픽 매체/소스 기반 유입 분석"
+    },
+    {
+      "name": "Jira",
+      "value": 85,
+      "description": "티켓 기반의 일감 관리 및 진행 현황 트래킹"
+    },
+    {
+      "name": "Confluence",
+      "value": 90,
+      "description": "PRD 및 요구사항 정의서 작성"
     }
   ]
 }
