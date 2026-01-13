@@ -23,6 +23,50 @@
 </head>
 
 <body>
+  <!-- Sidebar -->
+  <aside class="sidebar" data-sidebar>
+    <div class="sidebar-info">
+      <figure class="avatar-box">
+        <img id="profile-avatar" src="" alt="안승환" width="80">
+      </figure>
+      <div class="info-content">
+        <h1 id="profile-name" class="name" title="안승환">안승환</h1>
+        <p id="profile-title" class="title">Product Manager</p>
+      </div>
+      <button class="info_more-btn" data-sidebar-btn>
+        <span>Show Contacts</span>
+        <ion-icon name="chevron-down"></ion-icon>
+      </button>
+    </div>
+    <div class="sidebar-info_more">
+      <div class="separator"></div>
+      <ul class="contacts-list">
+        <li class="contact-item">
+          <div class="icon-box">
+            <ion-icon name="mail-outline"></ion-icon>
+          </div>
+          <div class="contact-info">
+            <p class="contact-title">Email</p>
+            <a id="profile-email" href="mailto:pagebyseungwhan@gmail.com" class="contact-link">pagebyseungwhan@gmail.com</a>
+          </div>
+        </li>
+        <li class="contact-item">
+          <div class="icon-box">
+            <ion-icon name="phone-portrait-outline"></ion-icon>
+          </div>
+          <div class="contact-info">
+            <p class="contact-title">Phone</p>
+            <a id="profile-phone" href="tel:010-2055-2691" class="contact-link">010-2055-2691</a>
+          </div>
+        </li>
+      </ul>
+      <div class="separator"></div>
+      <ul id="social-list" class="social-list">
+        <!-- Social links will be dynamically rendered here -->
+      </ul>
+    </div>
+  </aside>
+
   <!-- Main Container -->
   <main>
     <!-- About Section -->

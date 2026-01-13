@@ -5,6 +5,7 @@
 // ============================================
 let projectsData = null;
 let resumeData = null;
+let profileData = null;
 let uiTranslations = null;
 let currentLanguage = 'ko';
 
@@ -13,6 +14,7 @@ let currentLanguage = 'ko';
 // ============================================
 const PROJECTS_DATA_URL = 'data/projects.json';
 const RESUME_DATA_URL = 'data/resume.json';
+const PROFILE_DATA_URL = 'data/profile.json';
 
 async function loadProjectsData() {
   try {
@@ -37,6 +39,19 @@ async function loadResumeData() {
     return true;
   } catch (error) {
     console.error('Error loading resume data:', error);
+    return false;
+  }
+}
+
+async function loadProfileData() {
+  try {
+    const response = await fetch(PROFILE_DATA_URL);
+    if (!response.ok) throw new Error('Failed to load profile.json');
+    profileData = await response.json();
+    renderProfile();
+    return true;
+  } catch (error) {
+    console.error('Error loading profile data:', error);
     return false;
   }
 }
@@ -223,6 +238,67 @@ function renderSkills() {
       ${skill.description ? `<p class="skill-description" style="margin-top: 8px; font-size: 13px; color: hsl(0, 0%, 60%); line-height: 1.5;">${skill.description}</p>` : ''}
     </li>
   `).join('');
+}
+
+// ============================================
+// Render Profile to Sidebar
+// ============================================
+function renderProfile() {
+  if (!profileData) return;
+
+  // Update profile avatar
+  const profileAvatar = document.getElementById('profile-avatar');
+  if (profileAvatar) {
+    profileAvatar.src = profileData.avatar || './assets/images/my-avatar.png';
+    profileAvatar.alt = profileData.name || 'Profile';
+  }
+
+  // Update profile name
+  const profileName = document.getElementById('profile-name');
+  if (profileName) {
+    profileName.textContent = profileData.name || '';
+    profileName.title = profileData.name || '';
+  }
+
+  // Update profile title
+  const profileTitle = document.getElementById('profile-title');
+  if (profileTitle) {
+    profileTitle.textContent = profileData.jobTitle || '';
+  }
+
+  // Update email
+  const profileEmail = document.getElementById('profile-email');
+  if (profileEmail) {
+    profileEmail.textContent = profileData.email || '';
+    profileEmail.href = `mailto:${profileData.email || ''}`;
+  }
+
+  // Update phone
+  const profilePhone = document.getElementById('profile-phone');
+  if (profilePhone) {
+    profilePhone.textContent = profileData.phone || '';
+    profilePhone.href = `tel:${profileData.phone || ''}`;
+  }
+
+  // Render social links
+  const socialList = document.getElementById('social-list');
+  if (socialList && profileData.links && profileData.links.length > 0) {
+    socialList.innerHTML = profileData.links.map(link => {
+      // Handle different icon formats (logo-linkedin vs logo-linkedin-outline)
+      let iconName = link.icon;
+      // If icon doesn't have -outline suffix and is a logo, try adding it
+      if (iconName.startsWith('logo-') && !iconName.includes('-outline')) {
+        // Keep as is for logo icons
+      }
+      return `
+      <li class="social-item">
+        <a href="${link.url}" target="_blank" rel="noopener noreferrer" class="social-link" title="${link.name}">
+          <ion-icon name="${iconName}"></ion-icon>
+        </a>
+      </li>
+    `;
+    }).join('');
+  }
 }
 
 // ============================================
@@ -472,9 +548,10 @@ window.addEventListener('load', updateActiveNav);
 // Project Modal Event Listeners
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
-  // Load projects & resume data
+  // Load projects, resume & profile data
   loadProjectsData();
   loadResumeData();
+  loadProfileData();
 
   // Project modal close button
   const projectModalClose = document.getElementById('project-modal-close');

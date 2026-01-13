@@ -1,0 +1,19 @@
+{
+    "name": "안승환",
+    "jobTitle": "Product Manager",
+    "avatar": "./assets/images/anseunghwan-profile-github.JPG",
+    "email": "pagebyseungwhan@gmail.com",
+    "phone": "010-2055-2691",
+    "links": [
+      {
+        "name": "LinkedIn",
+        "url": "https://www.linkedin.com/in/seunghwan-an/",
+        "icon": "logo-linkedin"
+      },
+      {
+        "name": "Blog",
+        "url": "https://blogbyash.com/",
+        "icon": "book-outline"
+      }
+    ]
+  }
