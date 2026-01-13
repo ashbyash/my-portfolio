@@ -58,44 +58,52 @@
     return value;
   }
 
-  // Render Bento Grid
+  // Render Projects using original template classes
   function renderBentoGrid() {
-    const gridContainer = document.getElementById('bento-grid');
-    if (!gridContainer || !projectsData) return;
+    const projectsContainer = document.getElementById('projects-container');
+    if (!projectsContainer || !projectsData) return;
 
-    gridContainer.innerHTML = '';
+    projectsContainer.innerHTML = '';
 
     projectsData.forEach((project, index) => {
       const data = getLocalizedProject(project);
-      const card = document.createElement('div');
-      card.className = `bento-card ${getCardSizeClass(index)} ftco-animate`;
-      card.dataset.projectId = project.id;
-
+      
+      // Create project card with original template classes: project, img, text
+      const colDiv = document.createElement('div');
+      colDiv.className = 'col-md-4';
+      
+      const projectDiv = document.createElement('div');
+      projectDiv.className = 'project img ftco-animate d-flex justify-content-center align-items-center';
+      projectDiv.style.cssText = 'background-image: url(images/work-' + ((index % 6) + 1) + '.jpg);';
+      projectDiv.dataset.projectId = project.id;
+      
+      const overlay = document.createElement('div');
+      overlay.className = 'overlay';
+      
+      const textDiv = document.createElement('div');
+      textDiv.className = 'text text-center p-4';
+      
       // Get first result as key metric
       const keyMetric = data.results && data.results.length > 0 ? data.results[0] : '';
-
-      card.innerHTML = `
-        <div class="bento-card-content">
-          <div class="bento-card-header">
-            <span class="bento-company">${data.company}</span>
-            <span class="bento-period">${data.period}</span>
-          </div>
-          <h3 class="bento-title">${data.title}</h3>
-          <p class="bento-summary">${data.hero_summary}</p>
-          ${keyMetric ? `
-          <div class="bento-metrics">
-            <span class="bento-metric-label">${t('projects.keyMetric')}</span>
-            <p class="bento-metric-text">${keyMetric}</p>
-          </div>
-          ` : ''}
-          <div class="bento-card-footer">
-            <span class="bento-read-more">${t('projects.readMore')} &rarr;</span>
-          </div>
-        </div>
+      
+      textDiv.innerHTML = `
+        <h3><a href="#" class="project-link">${data.title}</a></h3>
+        <span class="project-company">${data.company}</span>
+        <p class="project-period mt-2 mb-2">${data.period}</p>
+        <p class="project-summary">${data.hero_summary}</p>
+        ${keyMetric ? `<p class="project-metric mt-3"><strong>${t('projects.keyMetric')}:</strong> ${keyMetric}</p>` : ''}
       `;
-
-      card.addEventListener('click', () => openModal(project));
-      gridContainer.appendChild(card);
+      
+      projectDiv.appendChild(overlay);
+      projectDiv.appendChild(textDiv);
+      colDiv.appendChild(projectDiv);
+      projectsContainer.appendChild(colDiv);
+      
+      // Add click event to open modal
+      projectDiv.addEventListener('click', (e) => {
+        e.preventDefault();
+        openModal(project);
+      });
     });
 
     // Re-initialize AOS/ftco animations if available
