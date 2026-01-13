@@ -79,22 +79,22 @@ function highlightMetrics(text) {
 // Render Projects to Portfolio
 // ============================================
 function renderProjects() {
-  const projectList = document.getElementById('project-list');
-  if (!projectList || !projectsData) return;
+  const projectGrid = document.getElementById('project-grid');
+  if (!projectGrid || !projectsData) return;
 
-  projectList.innerHTML = '';
+  // Set up Tailwind grid layout
+  projectGrid.className = 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6';
+  projectGrid.innerHTML = '';
 
   projectsData.forEach((project, index) => {
     const data = getLocalizedProject(project);
-    const li = document.createElement('li');
-    li.className = 'project-item active';
-    li.dataset.filterItem = '';
-    li.dataset.category = project.company.toLowerCase();
-    li.dataset.projectIndex = index;
+    const card = document.createElement('div');
+    card.className = 'group cursor-pointer';
+    card.dataset.projectIndex = index;
 
     // Tailwind-based card layout (Modern Minimalist)
-    li.innerHTML = `
-      <div class="group h-full bg-white border border-gray-200 rounded-2xl p-5 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-md">
+    card.innerHTML = `
+      <div class="h-full bg-white border border-gray-200 rounded-2xl p-5 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-md">
         <div class="relative h-48 w-full mb-4 overflow-hidden rounded-xl bg-gray-100 flex items-center justify-center">
           <img src="./assets/images/${project.id}.jpg"
                alt="${data.title}"
@@ -111,7 +111,7 @@ function renderProjects() {
           <h3 class="project-title text-lg font-semibold text-gray-900 leading-snug">${data.title}</h3>
           <p class="text-sm text-gray-700 leading-relaxed">${data.hero_summary || ''}</p>
           ${data.results && data.results.length
-            ? `<ul class="text-sm text-gray-700 list-disc list-inside space-y-1">
+            ? `<ul class="text-sm text-gray-700 list-disc list-inside space-y-1 mt-2">
                  ${data.results.slice(0, 2).map(r => `<li>${highlightMetrics(r)}</li>`).join('')}
                </ul>`
             : ''
@@ -121,8 +121,8 @@ function renderProjects() {
     `;
 
     // Image fallback handling
-    const img = li.querySelector('.project-image');
-    const placeholder = li.querySelector('.placeholder');
+    const img = card.querySelector('.project-image');
+    const placeholder = card.querySelector('.placeholder');
     if (img) {
       img.addEventListener('error', () => {
         img.classList.add('hidden');
@@ -135,16 +135,13 @@ function renderProjects() {
     }
 
     // Add click event to open modal
-    li.addEventListener('click', function(e) {
+    card.addEventListener('click', function(e) {
       e.preventDefault();
       openProjectModal(project);
     });
 
-    projectList.appendChild(li);
+    projectGrid.appendChild(card);
   });
-
-  // Reinitialize filter functionality
-  initializeFilterForDynamicProjects();
 }
 
 function renderResumeSections() {
