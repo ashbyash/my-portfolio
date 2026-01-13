@@ -1,0 +1,39 @@
+{
+    "skills": [
+    {
+      "name": "PostgreSQL",
+      "value": 70,
+      "description": "테이블 join을 통해 유저 전환 데이터 분석"
+    },
+    {
+      "name": "Google Spreadsheet",
+      "value": 80,
+      "description": "함수를 통한 유저 데이터 분석 및 외부 툴 연동 리포트 작성"
+    },
+    {
+      "name": "Figjam",
+      "value": 75,
+      "description": "유저 플로우 차트 및 스토리보드 제작"
+    },
+    {
+      "name": "Amplitude",
+      "value": 70,
+      "description": "Time to Convert 분석 및 고객군별 이벤트 차이 분석"
+    },
+    {
+      "name": "Google Analytics",
+      "value": 65,
+      "description": "트래픽 매체/소스 기반 유입 분석"
+    },
+    {
+      "name": "Jira",
+      "value": 85,
+      "description": "티켓 기반의 일감 관리 및 진행 현황 트래킹"
+    },
+    {
+      "name": "Confluence",
+      "value": 90,
+      "description": "PRD 및 요구사항 정의서 작성"
+    }
+  ]
+}
