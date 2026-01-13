@@ -46,12 +46,21 @@ async function loadResumeData() {
 async function loadProfileData() {
   try {
     const response = await fetch(PROFILE_DATA_URL);
-    if (!response.ok) throw new Error('Failed to load profile.json');
+    if (!response.ok) {
+      console.error(`Failed to load profile.json: ${response.status} ${response.statusText}`);
+      // Try to render with default values if file doesn't exist
+      renderProfile();
+      return false;
+    }
     profileData = await response.json();
+    console.log('Profile data loaded:', profileData);
     renderProfile();
     return true;
   } catch (error) {
     console.error('Error loading profile data:', error);
+    console.error('Profile data URL:', PROFILE_DATA_URL);
+    // Try to render with default values even on error
+    renderProfile();
     return false;
   }
 }
@@ -244,7 +253,11 @@ function renderSkills() {
 // Render Profile to Sidebar
 // ============================================
 function renderProfile() {
-  if (!profileData) return;
+  // If profileData is not loaded, use default values from HTML
+  if (!profileData) {
+    console.warn('Profile data not loaded, using default values from HTML');
+    return;
+  }
 
   // Update profile avatar
   const profileAvatar = document.getElementById('profile-avatar');
