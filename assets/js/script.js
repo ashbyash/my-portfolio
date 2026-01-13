@@ -8,23 +8,16 @@ let uiTranslations = null;
 let currentLanguage = 'ko';
 
 // ============================================
-// Fetch portfolio-*.json files from data/ directory
+// Fetch projects.json from data/ directory
 // ============================================
-const PORTFOLIO_FILES = [
-  'data/portfolio-01-classum-library-backoffice.json',
-  'data/portfolio-02-classum-team-activity.json',
-  'data/portfolio-03-modernlion-jangbeomjune.json',
-  'data/portfolio-04-modernlion-checkout-admin.json',
-  'data/portfolio-05-dreamary-designer-map.json',
-  'data/portfolio-06-dreamary-inapp-review.json'
-];
+const PROJECTS_DATA_URL = 'data/projects.json';
 
 async function loadProjectsData() {
   try {
-    const responses = await Promise.all(
-      PORTFOLIO_FILES.map(file => fetch(file).then(r => r.json()))
-    );
-    projectsData = responses;
+    const response = await fetch(PROJECTS_DATA_URL);
+    if (!response.ok) throw new Error('Failed to load projects.json');
+    const json = await response.json();
+    projectsData = json.projects || [];
     renderProjects();
     return true;
   } catch (error) {
@@ -36,6 +29,16 @@ async function loadProjectsData() {
 // Get project data (flat structure from individual JSON files)
 function getLocalizedProject(project) {
   return project;
+}
+
+function getInitials(text = '') {
+  return text
+    .split(' ')
+    .filter(Boolean)
+    .map(word => word[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase() || 'PM';
 }
 
 // UI Translations (hardcoded for now)
@@ -74,30 +77,45 @@ function renderProjects() {
     li.dataset.category = project.company.toLowerCase();
     li.dataset.projectIndex = index;
 
+    // Tailwind-based card layout (Modern Minimalist)
     li.innerHTML = `
-      <a href="#" onclick="return false;">
-        <figure class="project-img">
-          <div class="project-item-icon-box">
-            <ion-icon name="eye-outline"></ion-icon>
+      <div class="group h-full bg-slate-900/70 border border-slate-800 rounded-2xl p-5 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-slate-700 hover:shadow-lg">
+        <div class="relative h-48 w-full mb-4 overflow-hidden rounded-xl bg-slate-800/70 flex items-center justify-center">
+          <img src="./assets/images/${project.id}.jpg"
+               alt="${data.title}"
+               class="project-image hidden w-full h-full object-cover transition duration-300 group-hover:scale-[1.02]">
+          <div class="placeholder flex items-center justify-center w-full h-full bg-gradient-to-br from-slate-800 to-slate-900 text-amber-300 font-semibold text-2xl">
+            ${getInitials(data.title || project.company)}
           </div>
-          <div class="project-placeholder" style="
-            background: linear-gradient(135deg, hsl(240, 1%, 18%) 0%, hsl(240, 2%, 12%) 100%);
-            width: 100%;
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 16px;
-          ">
-            <span style="color: hsl(45, 100%, 71%); font-size: 24px; font-weight: 600;">${project.company.charAt(0)}</span>
+        </div>
+        <div class="space-y-2">
+          <div class="flex items-center justify-between text-sm text-slate-400">
+            <span class="font-semibold text-amber-300">${project.company}</span>
+            <span>${project.period}</span>
           </div>
-        </figure>
-
-        <h3 class="project-title">${data.title}</h3>
-
-        <p class="project-category">${project.company}</p>
-      </a>
+          <h3 class="project-title text-lg font-semibold text-slate-50 leading-snug">${data.title}</h3>
+          <p class="text-sm text-slate-300 leading-relaxed">${data.hero_summary || ''}</p>
+          ${data.results && data.results.length
+            ? `<p class="text-sm text-amber-200 font-semibold">• ${highlightMetrics(data.results[0])}</p>`
+            : ''
+          }
+        </div>
+      </div>
     `;
+
+    // Image fallback handling
+    const img = li.querySelector('.project-image');
+    const placeholder = li.querySelector('.placeholder');
+    if (img) {
+      img.addEventListener('error', () => {
+        img.classList.add('hidden');
+        placeholder.classList.remove('hidden');
+      });
+      img.addEventListener('load', () => {
+        placeholder.classList.add('hidden');
+        img.classList.remove('hidden');
+      });
+    }
 
     // Add click event to open modal
     li.addEventListener('click', function(e) {
