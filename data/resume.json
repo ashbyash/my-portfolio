@@ -1,0 +1,57 @@
+{
+  "experience": [
+    {
+      "title": "Creative Director",
+      "company": "Freelance",
+      "period": "2015 — Present",
+      "description": "제품 전략 수립부터 실행까지 전 과정을 총괄하며 크로스펑셔널 팀을 리딩했습니다."
+    },
+    {
+      "title": "Art Director",
+      "company": "Studio Nova",
+      "period": "2013 — 2015",
+      "description": "브랜드 아이덴티티와 UI 시스템을 구축해 신규 서비스 출시를 지원했습니다."
+    },
+    {
+      "title": "Web Designer",
+      "company": "Pixel Lab",
+      "period": "2010 — 2013",
+      "description": "반응형 웹 프로젝트를 다수 수행하며 디자인 시스템과 프로토타입 제작을 담당했습니다."
+    }
+  ],
+  "education": [
+    {
+      "school": "University School of the Arts",
+      "period": "2007 — 2008",
+      "description": "Interaction Design · HCI · Cognitive Psychology"
+    },
+    {
+      "school": "New York Academy of Art",
+      "period": "2006 — 2007",
+      "description": "Visual Narrative · Editorial Systems"
+    },
+    {
+      "school": "High School of Art & Design",
+      "period": "2002 — 2004",
+      "description": "Industrial Design · Typography Fundamentals"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Product Strategy",
+      "value": 90
+    },
+    {
+      "name": "Experience Design",
+      "value": 85
+    },
+    {
+      "name": "Stakeholder Management",
+      "value": 80
+    },
+    {
+      "name": "Data Analysis",
+      "value": 75
+    }
+  ]
+}

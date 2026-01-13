@@ -4,6 +4,7 @@
 // Portfolio Data & State
 // ============================================
 let projectsData = null;
+let resumeData = null;
 let uiTranslations = null;
 let currentLanguage = 'ko';
 
@@ -11,6 +12,7 @@ let currentLanguage = 'ko';
 // Fetch projects.json from data/ directory
 // ============================================
 const PROJECTS_DATA_URL = 'data/projects.json';
+const RESUME_DATA_URL = 'data/resume.json';
 
 async function loadProjectsData() {
   try {
@@ -22,6 +24,19 @@ async function loadProjectsData() {
     return true;
   } catch (error) {
     console.error('Error loading portfolio data:', error);
+    return false;
+  }
+}
+
+async function loadResumeData() {
+  try {
+    const response = await fetch(RESUME_DATA_URL);
+    if (!response.ok) throw new Error('Failed to load resume.json');
+    resumeData = await response.json();
+    renderResumeSections();
+    return true;
+  } catch (error) {
+    console.error('Error loading resume data:', error);
     return false;
   }
 }
@@ -130,6 +145,59 @@ function renderProjects() {
 
   // Reinitialize filter functionality
   initializeFilterForDynamicProjects();
+}
+
+function renderResumeSections() {
+  if (!resumeData) return;
+  renderExperience();
+  renderEducation();
+  renderSkills();
+}
+
+function renderExperience() {
+  const container = document.getElementById('experience-list');
+  if (!container) return;
+
+  container.innerHTML = (resumeData.experience || []).map(item => `
+    <div class="border-l-2 border-gray-200 pl-4">
+      <p class="text-sm text-gray-500">${item.period}</p>
+      <h3 class="text-lg font-semibold text-gray-900">${item.title}</h3>
+      <p class="text-sm text-gray-600">${item.company}</p>
+      <p class="text-sm text-gray-600 mt-2 leading-relaxed">${item.description}</p>
+    </div>
+  `).join('');
+}
+
+function renderEducation() {
+  const container = document.getElementById('education-list');
+  if (!container) return;
+
+  container.innerHTML = (resumeData.education || []).map(item => `
+    <div class="rounded-xl border border-gray-200 p-4 shadow-sm bg-white">
+      <div class="flex items-center justify-between text-sm text-gray-500 mb-1">
+        <span>${item.school}</span>
+        <span>${item.period}</span>
+      </div>
+      <p class="text-sm text-gray-700">${item.description}</p>
+    </div>
+  `).join('');
+}
+
+function renderSkills() {
+  const container = document.getElementById('skills-list');
+  if (!container) return;
+
+  container.innerHTML = (resumeData.skills || []).map(skill => `
+    <div>
+      <div class="flex items-center justify-between text-sm text-gray-700 mb-1">
+        <span>${skill.name}</span>
+        <span>${skill.value}%</span>
+      </div>
+      <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+        <div class="h-full bg-gray-900 rounded-full" style="width:${skill.value}%"></div>
+      </div>
+    </div>
+  `).join('');
 }
 
 // ============================================
@@ -379,8 +447,9 @@ window.addEventListener('load', updateActiveNav);
 // Project Modal Event Listeners
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
-  // Load projects data
+  // Load projects & resume data
   loadProjectsData();
+  loadResumeData();
 
   // Project modal close button
   const projectModalClose = document.getElementById('project-modal-close');
