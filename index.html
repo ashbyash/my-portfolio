@@ -20,44 +20,59 @@
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'bg-dark': '#121212',
+            'card-bg': '#1e1e1f',
+            'card-dark': '#2a2a2a',
+            'border-gray': '#383838',
+            'gold': '#ffdb70',
+          }
+        }
+      }
+    }
+  </script>
 </head>
 
 <body>
   <div class="container">
     <!-- Sidebar -->
-    <aside class="sidebar" data-sidebar>
-      <div class="sidebar-content">
-        <figure class="avatar-box">
-          <img id="profile-avatar" src="" alt="안승환">
+    <aside class="sticky top-[30px] w-full md:w-[300px] flex-shrink-0 bg-[#1e1e1f] border border-[#383838] rounded-[20px] p-[30px] h-fit md:sticky md:top-[30px] relative top-0" data-sidebar>
+      <div class="flex flex-col gap-[30px]">
+        <figure class="w-[180px] h-[180px] mx-auto bg-[#2a2a2a] rounded-[20px] overflow-hidden border border-[#383838]">
+          <img id="profile-avatar" src="" alt="안승환" class="w-full h-full object-cover block">
         </figure>
-        <div class="info-content">
-          <h1 id="profile-name" class="name" title="안승환">안승환</h1>
-          <p id="profile-title" class="title">Product Manager</p>
+        <div class="text-center">
+          <h1 id="profile-name" class="text-white text-lg font-semibold tracking-[-0.25px] mb-3" title="안승환">안승환</h1>
+          <p id="profile-title" class="text-white bg-[#2a2a2a] text-[13px] font-normal w-max mx-auto px-4 py-1.5 rounded-lg">Product Manager</p>
         </div>
-        <div class="contact-info-section">
-          <div class="separator"></div>
-          <ul class="contacts-list">
-            <li class="contact-item">
-              <div class="icon-box">
-                <ion-icon name="mail-outline"></ion-icon>
+        <div class="flex flex-col gap-5">
+          <div class="w-full h-px bg-[#383838]"></div>
+          <ul class="flex flex-col gap-4">
+            <li class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-[10px] flex justify-center items-center text-lg text-[#ffdb70] bg-[#2a2a2a] border border-[#383838] flex-shrink-0">
+                <ion-icon name="mail-outline" style="--ionicon-stroke-width: 35px;"></ion-icon>
               </div>
-              <div class="contact-info">
-                <p class="contact-title">Email</p>
-                <a id="profile-email" href="mailto:pagebyseungwhan@gmail.com" class="contact-link">pagebyseungwhan@gmail.com</a>
+              <div class="flex-1">
+                <p class="text-[rgba(255,255,255,0.7)] text-[11px] uppercase mb-0.5">Email</p>
+                <a id="profile-email" href="mailto:pagebyseungwhan@gmail.com" class="text-white text-[13px] block">pagebyseungwhan@gmail.com</a>
               </div>
             </li>
-            <li class="contact-item">
-              <div class="icon-box">
-                <ion-icon name="phone-portrait-outline"></ion-icon>
+            <li class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-[10px] flex justify-center items-center text-lg text-[#ffdb70] bg-[#2a2a2a] border border-[#383838] flex-shrink-0">
+                <ion-icon name="phone-portrait-outline" style="--ionicon-stroke-width: 35px;"></ion-icon>
               </div>
-              <div class="contact-info">
-                <p class="contact-title">Phone</p>
-                <a id="profile-phone" href="tel:010-2055-2691" class="contact-link">010-2055-2691</a>
+              <div class="flex-1">
+                <p class="text-[rgba(255,255,255,0.7)] text-[11px] uppercase mb-0.5">Phone</p>
+                <a id="profile-phone" href="tel:010-2055-2691" class="text-white text-[13px] block">010-2055-2691</a>
               </div>
             </li>
           </ul>
-          <div class="separator"></div>
-          <ul id="social-list" class="social-list">
+          <div class="w-full h-px bg-[#383838]"></div>
+          <ul id="social-list" class="flex justify-start items-center gap-[15px] pl-[7px]">
             <!-- Social links will be dynamically rendered here -->
           </ul>
         </div>
@@ -108,6 +123,17 @@
       <div id="project-grid"></div>
     </section>
     </main>
+  </div>
+
+  <!-- Project Modal -->
+  <div id="project-modal-container" class="project-modal-container">
+    <div id="project-modal-overlay" class="project-modal-overlay"></div>
+    <div class="project-modal-wrapper">
+      <div id="project-modal-content" class="project-modal-content"></div>
+      <button id="project-modal-close" class="project-modal-close" aria-label="Close modal">
+        <ion-icon name="close-outline"></ion-icon>
+      </button>
+    </div>
   </div>
 
   <!-- JavaScript -->

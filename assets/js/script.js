@@ -10,18 +10,44 @@ let uiTranslations = null;
 let currentLanguage = 'ko';
 
 // ============================================
-// Fetch projects.json from data/ directory
+// Fetch portfolio JSON files from data/ directory
 // ============================================
-const PROJECTS_DATA_URL = 'data/projects.json';
+const PORTFOLIO_FILES = [
+  'data/portfolio-01-classum-library-backoffice.json',
+  'data/portfolio-02-classum-team-activity.json',
+  'data/portfolio-03-modernlion-jangbeomjune.json',
+  'data/portfolio-04-modernlion-checkout-admin.json',
+  'data/portfolio-05-dreamary-designer-map.json',
+  'data/portfolio-06-dreamary-inapp-review.json'
+];
 const RESUME_DATA_URL = 'data/resume.json';
 const PROFILE_DATA_URL = 'data/profile.json';
 
 async function loadProjectsData() {
   try {
-    const response = await fetch(PROJECTS_DATA_URL);
-    if (!response.ok) throw new Error('Failed to load projects.json');
-    const json = await response.json();
-    projectsData = json.projects || [];
+    const promises = PORTFOLIO_FILES.map(file => 
+      fetch(file)
+        .then(response => {
+          if (!response.ok) throw new Error(`Failed to load ${file}`);
+          return response.json();
+        })
+        .catch(error => {
+          console.warn(`Error loading ${file}:`, error);
+          return null;
+        })
+    );
+    
+    const results = await Promise.all(promises);
+    projectsData = results.filter(project => project !== null);
+    
+    // Sort by portfolio number if needed
+    projectsData.sort((a, b) => {
+      const aNum = parseInt(a.id.match(/\d+/)?.[0] || '0');
+      const bNum = parseInt(b.id.match(/\d+/)?.[0] || '0');
+      return aNum - bNum;
+    });
+    
+    console.log(`Loaded ${projectsData.length} portfolio projects`);
     renderProjects();
     return true;
   } catch (error) {
@@ -106,8 +132,8 @@ function renderProjects() {
   const projectGrid = document.getElementById('project-grid');
   if (!projectGrid || !projectsData) return;
 
-  // Set up Tailwind grid layout
-  projectGrid.className = 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6';
+  // Set up CSS grid layout
+  projectGrid.className = 'project-grid';
   projectGrid.innerHTML = '';
 
   projectsData.forEach((project, index) => {
@@ -116,26 +142,30 @@ function renderProjects() {
     card.className = 'group cursor-pointer';
     card.dataset.projectIndex = index;
 
-    // Tailwind-based card layout (Modern Minimalist)
+    // Dark theme card layout matching the design
     card.innerHTML = `
-      <div class="h-full bg-white border border-gray-200 rounded-2xl p-5 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-md">
-        <div class="relative h-48 w-full mb-4 overflow-hidden rounded-xl bg-gray-100 flex items-center justify-center">
+      <div class="project-card">
+        <div class="project-image-wrapper">
           <img src="./assets/images/${project.id}.jpg"
                alt="${data.title}"
-               class="project-image hidden w-full h-full object-cover transition duration-300 group-hover:scale-[1.02]">
-          <div class="placeholder flex items-center justify-center w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 text-gray-500 font-semibold text-2xl">
+               class="project-image">
+          <div class="project-placeholder">
             ${getInitials(data.title || project.company)}
           </div>
         </div>
-        <div class="space-y-2">
-          <div class="flex items-center justify-between text-sm text-gray-500">
-            <span class="font-medium text-gray-700">${project.company}</span>
-            <span>${project.period}</span>
+        <div class="project-card-content">
+          <div class="project-meta">
+            <span class="project-company">${project.company}</span>
+            <span class="project-period">${project.period}</span>
           </div>
-          <h3 class="project-title text-lg font-semibold text-gray-900 leading-snug">${data.title}</h3>
-          <p class="text-sm text-gray-700 leading-relaxed">${data.hero_summary || ''}</p>
+          <h3 class="project-title">${data.title}</h3>
+          <p class="project-summary">${data.hero_summary || ''}</p>
+          ${data.hypothesis
+            ? `<div class="project-hypothesis">${data.hypothesis}</div>`
+            : ''
+          }
           ${data.results && data.results.length
-            ? `<ul class="text-sm text-gray-700 list-disc list-inside space-y-1 mt-2">
+            ? `<ul class="project-results-preview">
                  ${data.results.slice(0, 2).map(r => `<li>${highlightMetrics(r)}</li>`).join('')}
                </ul>`
             : ''
@@ -146,16 +176,21 @@ function renderProjects() {
 
     // Image fallback handling
     const img = card.querySelector('.project-image');
-    const placeholder = card.querySelector('.placeholder');
-    if (img) {
+    const placeholder = card.querySelector('.project-placeholder');
+    if (img && placeholder) {
       img.addEventListener('error', () => {
-        img.classList.add('hidden');
-        placeholder.classList.remove('hidden');
+        img.classList.remove('loaded');
+        placeholder.style.display = 'flex';
       });
       img.addEventListener('load', () => {
-        placeholder.classList.add('hidden');
-        img.classList.remove('hidden');
+        img.classList.add('loaded');
+        placeholder.style.display = 'none';
       });
+      // Try to load the image
+      const imgSrc = img.getAttribute('src');
+      if (imgSrc) {
+        img.src = imgSrc;
+      }
     }
 
     // Add click event to open modal
@@ -420,6 +455,19 @@ function openProjectModal(project) {
       <p class="star-content">${data.problem || ''}</p>
     </div>
 
+    <!-- Hypothesis -->
+    ${data.hypothesis ? `
+    <div class="star-section hypothesis-section">
+      <div class="star-label">
+        <span class="star-icon-alt">H</span>
+        <h4>가설</h4>
+      </div>
+      <div class="hypothesis-callout">
+        <p class="hypothesis-content">${data.hypothesis}</p>
+      </div>
+    </div>
+    ` : ''}
+
     <!-- Action -->
     <div class="star-section">
       <div class="star-label">
@@ -456,8 +504,10 @@ function openProjectModal(project) {
     ` : ''}
   `;
 
-  modalContainer.classList.add('active');
-  document.body.style.overflow = 'hidden';
+  if (modalContainer) {
+    modalContainer.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
 }
 
 function closeProjectModal() {
