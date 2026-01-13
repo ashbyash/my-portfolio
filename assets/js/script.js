@@ -477,9 +477,9 @@ function openProjectModal(project) {
   const renderText = (content) => {
     if (!content) return '';
     if (Array.isArray(content)) {
-      return content.map(text => `<p class="mb-2 leading-relaxed text-gray-300">${text}</p>`).join('');
+      return content.map(text => `<p class="mb-2 leading-relaxed text-gray-700">${text}</p>`).join('');
     }
-    return `<p class="leading-relaxed text-gray-300">${content}</p>`;
+    return `<p class="leading-relaxed text-gray-700">${content}</p>`;
   };
 
   // 3. Helper: Render lists (for Actions/Results/Background/Problem/Hypothesis)
@@ -500,7 +500,7 @@ function openProjectModal(project) {
     <div class="project-modal-header mb-6">
       <div class="flex flex-wrap gap-2 mb-2">
         <span class="px-3 py-1 text-xs font-bold text-white bg-apple-blue rounded-full">${project.company}</span>
-        <span class="px-3 py-1 text-xs font-medium text-gray-400 border border-gray-700 rounded-full">${project.period}</span>
+        <span class="px-3 py-1 text-xs font-medium text-apple-text-secondary border border-apple-border rounded-full">${project.period}</span>
       </div>
       <h3 class="text-2xl font-bold text-apple-text-primary mb-2">${data.title}</h3>
     </div>
