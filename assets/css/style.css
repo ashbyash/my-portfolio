@@ -30,20 +30,21 @@ input, textarea {
 }
 
 ::selection {
-  background: #ffdb70;
-  color: #121212;
+  background: #0066CC;
+  color: #FFFFFF;
 }
 
-:focus { outline-color: #ffdb70; }
+:focus { outline-color: #0066CC; }
 
 html { 
   font-family: 'Poppins', 'Noto Sans KR', sans-serif;
 }
 
+/* Dark mode colors removed - using Tailwind classes instead */
 body { 
-  background: #121212;
+  /* background: #121212; */
   min-height: 100vh;
-  color: #ffffff;
+  /* color: #ffffff; */
   font-size: 14px;
   line-height: 1.6;
 }
@@ -76,20 +77,22 @@ body {
 /* 사이드바는 이제 Tailwind CSS로 스타일링됩니다 */
 /* JavaScript에서 동적으로 생성되는 social-list 스타일만 유지 */
 
+/* Dark mode colors removed - using Tailwind classes instead */
 .social-item .social-link {
-  color: rgba(255, 255, 255, 0.7);
+  /* color: rgba(255, 255, 255, 0.7); */
   font-size: 20px;
   transition: color 0.25s ease;
 }
 
 .social-item .social-link:hover { 
-  color: #ffdb70; 
+  color: #0066CC; 
 }
 
 /*-----------------------------------*\
   #ICON BOX (메인 콘텐츠용)
 \*-----------------------------------*/
 
+/* Dark mode colors removed - using Tailwind classes instead */
 .icon-box {
   width: 40px;
   height: 40px;
@@ -98,9 +101,9 @@ body {
   justify-content: center;
   align-items: center;
   font-size: 18px;
-  color: #ffdb70;
-  background: #2a2a2a;
-  border: 1px solid #383838;
+  /* color: #ffdb70; */
+  /* background: #2a2a2a; */
+  /* border: 1px solid #383838; */
   flex-shrink: 0;
 }
 
@@ -110,11 +113,12 @@ body {
   #MAIN CONTENT
 \*-----------------------------------*/
 
+/* Dark mode colors removed - using Tailwind classes instead */
 .main-content {
   flex: 1;
   min-width: 0;
-  background: #1e1e1f;
-  border: 1px solid #383838;
+  /* background: #1e1e1f; */
+  /* border: 1px solid #383838; */
   border-radius: 20px;
   padding: 40px;
   display: flex;
@@ -137,11 +141,12 @@ body {
   #TYPOGRAPHY
 \*-----------------------------------*/
 
+/* Dark mode colors removed - using Tailwind classes instead */
 .h2,
 .h3,
 .h4,
 .h5 {
-  color: #ffffff;
+  /* color: #ffffff; */
   text-transform: capitalize;
 }
 
@@ -167,8 +172,9 @@ body {
   #ABOUT SECTION
 \*-----------------------------------*/
 
+/* Dark mode colors removed - using Tailwind classes instead */
 .about-text {
-  color: rgba(255, 255, 255, 0.84);
+  /* color: rgba(255, 255, 255, 0.84); */
   font-size: 14px;
   font-weight: 300;
   line-height: 1.6;
@@ -202,7 +208,7 @@ body {
   left: -30px;
   width: 1px;
   height: 100%;
-  background: #383838;
+  /* background: #383838; */
 }
 
 .timeline-item::after {
@@ -212,20 +218,21 @@ body {
   left: -33px;
   height: 8px;
   width: 8px;
-  background: #ffdb70;
+  background: #0066CC;
   border-radius: 50%;
-  box-shadow: 0 0 0 4px #1e1e1f, 0 0 0 5px #383838;
+  /* box-shadow: 0 0 0 4px #1e1e1f, 0 0 0 5px #383838; */
 }
 
+/* Dark mode colors removed - using Tailwind classes instead */
 .timeline-item-title {
   font-size: 14px;
   line-height: 1.3;
   margin-bottom: 7px;
-  color: #ffffff;
+  /* color: #ffffff; */
 }
 
 .timeline-list span {
-  color: #ffdb70;
+  color: #0066CC;
   font-weight: 400;
   line-height: 1.6;
   display: block;
@@ -233,13 +240,13 @@ body {
 }
 
 .timeline-text {
-  color: rgba(255, 255, 255, 0.84);
+  /* color: rgba(255, 255, 255, 0.84); */
   font-weight: 300;
   line-height: 1.6;
 }
 
 .timeline-text strong {
-  color: #ffffff;
+  /* color: #ffffff; */
   font-weight: 500;
 }
 
@@ -251,10 +258,11 @@ body {
   margin-bottom: 0;
 }
 
+/* Dark mode colors removed - using Tailwind classes instead */
 .skills-title { 
   margin-bottom: 30px;
   font-size: 18px;
-  color: #ffffff;
+  /* color: #ffffff; */
 }
 
 .skills-list { 
@@ -278,14 +286,15 @@ body {
   margin-bottom: 0;
 }
 
+/* Dark mode colors removed - using Tailwind classes instead */
 .skill .title-wrapper data {
-  color: rgba(255, 255, 255, 0.7);
+  /* color: rgba(255, 255, 255, 0.7); */
   font-size: 13px;
   font-weight: 300;
 }
 
 .skill-progress-bg {
-  background: #383838;
+  /* background: #383838; */
   width: 100%;
   height: 8px;
   border-radius: 10px;
@@ -293,7 +302,7 @@ body {
 }
 
 .skill-progress-fill {
-  background: linear-gradient(to right, #ffdb70, hsl(45, 100%, 65%));
+  background: linear-gradient(to right, #0066CC, #0080FF);
   height: 100%;
   border-radius: inherit;
   transition: width 0.3s ease;
@@ -302,7 +311,7 @@ body {
 .skill-description {
   margin-top: 8px;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.6);
+  /* color: rgba(255, 255, 255, 0.6); */
   line-height: 1.5;
 }
 
@@ -327,9 +336,10 @@ body {
   }
 }
 
+/* Dark mode colors removed - using Tailwind classes instead */
 .project-card {
-  background: #2a2a2a;
-  border: 1px solid #383838;
+  /* background: #2a2a2a; */
+  /* border: 1px solid #383838; */
   border-radius: 16px;
   padding: 20px;
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
@@ -341,10 +351,11 @@ body {
 
 .project-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
-  border-color: #ffdb70;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+  border-color: #0066CC;
 }
 
+/* Dark mode colors removed - using Tailwind classes instead */
 .project-image-wrapper {
   position: relative;
   width: 100%;
@@ -352,7 +363,7 @@ body {
   margin-bottom: 16px;
   border-radius: 12px;
   overflow: hidden;
-  background: #1e1e1f;
+  /* background: #1e1e1f; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -369,14 +380,15 @@ body {
   display: block;
 }
 
+/* Dark mode colors removed - using Tailwind classes instead */
 .project-placeholder {
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #2a2a2a;
-  color: rgba(255, 255, 255, 0.7);
+  /* background: #2a2a2a; */
+  /* color: rgba(255, 255, 255, 0.7); */
   font-size: 32px;
   font-weight: 600;
 }
@@ -392,34 +404,35 @@ body {
   gap: 12px;
 }
 
+/* Dark mode colors removed - using Tailwind classes instead */
 .project-meta {
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.7);
+  /* color: rgba(255, 255, 255, 0.7); */
 }
 
 .project-company {
   font-weight: 500;
-  color: #ffffff;
+  /* color: #ffffff; */
 }
 
 .project-period {
-  color: rgba(255, 255, 255, 0.7);
+  /* color: rgba(255, 255, 255, 0.7); */
 }
 
 .project-title {
   font-size: 17px;
   font-weight: 600;
-  color: #ffffff;
+  /* color: #ffffff; */
   line-height: 1.4;
   margin: 0;
 }
 
 .project-summary {
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.84);
+  /* color: rgba(255, 255, 255, 0.84); */
   line-height: 1.6;
   margin: 0;
   flex: 1;
@@ -428,11 +441,11 @@ body {
 .project-hypothesis {
   margin-top: 8px;
   padding: 12px;
-  background: rgba(255, 219, 112, 0.1);
-  border-left: 3px solid #ffdb70;
+  background: rgba(0, 102, 204, 0.1);
+  border-left: 3px solid #0066CC;
   border-radius: 6px;
   font-size: 13px;
-  color: #ffffff;
+  /* color: #ffffff; */
   font-style: italic;
   line-height: 1.6;
 }
@@ -442,7 +455,7 @@ body {
   padding: 0;
   margin: 8px 0 0 0;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.84);
+  /* color: rgba(255, 255, 255, 0.84); */
 }
 
 .project-results-preview li {
@@ -453,7 +466,7 @@ body {
 
 .project-results-preview li::before {
   content: "•";
-  color: #ffdb70;
+  color: #0066CC;
   position: absolute;
   left: 0;
 }
@@ -486,7 +499,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.5);
   z-index: 1001;
 }
 
@@ -497,15 +510,16 @@ body {
   width: 100%;
 }
 
+/* Dark mode colors removed - using Tailwind classes instead */
 .project-modal-content {
-  background: #1e1e1f;
-  border: 1px solid #383838;
+  background: #FFFFFF;
+  border: 1px solid #D2D2D7;
   border-radius: 20px;
   padding: 40px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.15);
   position: relative;
 }
 
@@ -515,39 +529,40 @@ body {
   right: 20px;
   width: 40px;
   height: 40px;
-  background: #2a2a2a;
-  border: 1px solid #ffdb70;
+  /* background: #2a2a2a; */
+  border: 1px solid #0066CC;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffdb70;
+  color: #0066CC;
   cursor: pointer;
   z-index: 1003;
   transition: all 0.25s ease;
 }
 
 .project-modal-close:hover {
-  background: #ffdb70;
-  color: #121212;
+  background: #0066CC;
+  color: #FFFFFF;
 }
 
+/* Dark mode colors removed - using Tailwind classes instead */
 .project-modal-header {
   margin-bottom: 30px;
   padding-bottom: 20px;
-  border-bottom: 1px solid #383838;
+  /* border-bottom: 1px solid #383838; */
 }
 
 .project-modal-header h3 {
-  color: #ffffff;
+  /* color: #ffffff; */
   font-size: 24px;
   margin-top: 10px;
 }
 
 .company-badge {
   display: inline-block;
-  background: #ffdb70;
-  color: #121212;
+  background: #0066CC;
+  color: #FFFFFF;
   padding: 4px 12px;
   border-radius: 6px;
   font-size: 13px;
@@ -556,7 +571,7 @@ body {
 }
 
 .period {
-  color: rgba(255, 255, 255, 0.7);
+  /* color: rgba(255, 255, 255, 0.7); */
   font-size: 13px;
 }
 
@@ -565,7 +580,7 @@ body {
 }
 
 .project-modal-hero p {
-  color: rgba(255, 255, 255, 0.84);
+  /* color: rgba(255, 255, 255, 0.84); */
   font-size: 16px;
   line-height: 1.8;
 }
@@ -585,8 +600,8 @@ body {
 .star-icon-alt {
   width: 32px;
   height: 32px;
-  background: #ffdb70;
-  color: #121212;
+  background: #0066CC;
+  color: #FFFFFF;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -597,11 +612,12 @@ body {
 }
 
 .star-icon-alt {
-  background: linear-gradient(135deg, #ffdb70, hsl(45, 100%, 65%));
+  background: linear-gradient(135deg, #0066CC, #0080FF);
 }
 
+/* Dark mode colors removed - using Tailwind classes instead */
 .star-content {
-  color: rgba(255, 255, 255, 0.84);
+  /* color: rgba(255, 255, 255, 0.84); */
   line-height: 1.8;
   font-size: 15px;
 }
@@ -612,7 +628,7 @@ body {
 }
 
 .star-list li {
-  color: rgba(255, 255, 255, 0.84);
+  /* color: rgba(255, 255, 255, 0.84); */
   line-height: 1.8;
   font-size: 15px;
   margin-bottom: 10px;
@@ -622,7 +638,7 @@ body {
 
 .star-list li::before {
   content: "•";
-  color: #ffdb70;
+  color: #0066CC;
   position: absolute;
   left: 0;
   font-weight: bold;
@@ -633,15 +649,15 @@ body {
 }
 
 .hypothesis-callout {
-  background: rgba(255, 219, 112, 0.1);
-  border-left: 4px solid #ffdb70;
+  background: rgba(0, 102, 204, 0.1);
+  border-left: 4px solid #0066CC;
   border-radius: 8px;
   padding: 20px;
   margin-top: 10px;
 }
 
 .hypothesis-content {
-  color: #ffffff;
+  /* color: #ffffff; */
   font-size: 16px;
   line-height: 1.8;
   font-style: italic;

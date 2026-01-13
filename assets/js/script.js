@@ -163,24 +163,24 @@ function renderProjects() {
     card.className = 'group cursor-pointer';
     card.dataset.projectIndex = index;
 
-    // Dark theme card layout matching the design
+    // Apple-style light theme card layout
     card.innerHTML = `
-      <div class="project-card">
-        <div class="project-image-wrapper">
+      <div class="project-card bg-apple-card border border-apple-border">
+        <div class="project-image-wrapper bg-apple-bg border border-apple-border">
           <img src="./assets/images/${project.id}.jpg"
                alt="${data.title}"
                class="project-image">
-          <div class="project-placeholder">
+          <div class="project-placeholder text-apple-text-secondary">
             ${getInitials(data.title || project.company)}
           </div>
         </div>
         <div class="project-card-content">
-          <div class="project-meta">
-            <span class="project-company">${project.company}</span>
+          <div class="project-meta text-apple-text-secondary">
+            <span class="project-company text-apple-text-primary">${project.company}</span>
             <span class="project-period">${project.period}</span>
           </div>
-          <h3 class="project-title">${data.title}</h3>
-          <p class="project-summary">${data.hero_summary || ''}</p>
+          <h3 class="project-title text-apple-text-primary">${data.title}</h3>
+          <p class="project-summary text-apple-text-secondary">${data.hero_summary || ''}</p>
           ${data.hypothesis
             ? `<div class="project-hypothesis">${data.hypothesis}</div>`
             : ''
@@ -267,11 +267,11 @@ function renderExperience() {
   container.innerHTML = resumeData.experience.map((item, index, array) => {
     console.log('Rendering experience item:', item);
     return `
-    <li class="relative pb-5 ${index !== array.length - 1 ? 'before:content-[""] before:absolute before:top-0 before:-left-[30px] before:w-px before:h-full before:bg-[#383838]' : ''} after:content-[""] after:absolute after:top-[5px] after:-left-[33px] after:h-2 after:w-2 after:bg-[#ffdb70] after:rounded-full after:shadow-[0_0_0_4px_#1e1e1f,0_0_0_5px_#383838]">
-      <h4 class="text-base leading-[1.3] mb-[7px] text-white">${item.title || ''}</h4>
-      <span class="text-[#ffdb70] font-normal leading-[1.6] block mb-2">${item.period || ''}</span>
-      <p class="text-[rgba(255,255,255,0.84)] font-light leading-[1.6]">
-        <strong class="text-white font-medium">${item.company || ''}</strong><br>
+    <li class="relative pb-5 ${index !== array.length - 1 ? 'before:content-[""] before:absolute before:top-0 before:-left-[30px] before:w-px before:h-full before:bg-apple-border' : ''} after:content-[""] after:absolute after:top-[5px] after:-left-[33px] after:h-2 after:w-2 after:bg-apple-blue after:rounded-full after:shadow-[0_0_0_4px_#FFFFFF,0_0_0_5px_#D2D2D7]">
+      <h4 class="text-base leading-[1.3] mb-[7px] text-apple-text-primary">${item.title || ''}</h4>
+      <span class="text-apple-blue font-normal leading-[1.6] block mb-2">${item.period || ''}</span>
+      <p class="text-apple-text-secondary font-light leading-[1.6]">
+        <strong class="text-apple-text-primary font-medium">${item.company || ''}</strong><br>
         ${item.description || ''}
       </p>
     </li>
@@ -298,10 +298,10 @@ function renderEducation() {
 
   container.innerHTML = (resumeData.education || []).map(item => `
     <li class="timeline-item">
-      <h4 class="h4 timeline-item-title">${item.school}</h4>
-      <span>${item.period}</span>
-      <p class="timeline-text">
-        ${item.degree ? `<strong>${item.degree}</strong><br>` : ''}
+      <h4 class="h4 timeline-item-title text-apple-text-primary">${item.school}</h4>
+      <span class="text-apple-blue">${item.period}</span>
+      <p class="timeline-text text-apple-text-secondary">
+        ${item.degree ? `<strong class="text-apple-text-primary">${item.degree}</strong><br>` : ''}
         ${item.major ? `${item.major}<br>` : ''}
         ${item.description || ''}
       </p>
@@ -317,13 +317,13 @@ function renderSkills() {
   container.innerHTML = (resumeData.skills || []).map(skill => `
     <li class="skills-item">
       <div class="title-wrapper">
-        <h5 class="h5">${skill.name}</h5>
-        <data value="${skill.value}">${skill.value}%</data>
+        <h5 class="h5 text-apple-text-primary">${skill.name}</h5>
+        <data value="${skill.value}" class="text-apple-text-secondary">${skill.value}%</data>
       </div>
-      <div class="skill-progress-bg">
+      <div class="skill-progress-bg bg-apple-border">
         <div class="skill-progress-fill" style="width: ${skill.value}%;"></div>
       </div>
-      ${skill.description ? `<p class="skill-description" style="margin-top: 8px; font-size: 13px; color: hsl(0, 0%, 60%); line-height: 1.5;">${skill.description}</p>` : ''}
+      ${skill.description ? `<p class="skill-description text-apple-text-secondary" style="margin-top: 8px; font-size: 13px; line-height: 1.5;">${skill.description}</p>` : ''}
     </li>
   `).join('');
 }
@@ -450,7 +450,7 @@ function renderProfile() {
       }
       return `
       <li class="social-item">
-        <a href="${link.url}" target="_blank" rel="noopener noreferrer" class="social-link" title="${link.name}">
+        <a href="${link.url}" target="_blank" rel="noopener noreferrer" class="social-link text-apple-text-secondary hover:text-apple-blue" title="${link.name}">
           <ion-icon name="${iconName}"></ion-icon>
         </a>
       </li>
@@ -489,7 +489,7 @@ function openProjectModal(project) {
     const itemsArray = Array.isArray(items) ? items : [items];
     if (itemsArray.length === 0) return '';
     return itemsArray.map(item => 
-      `<li class="mb-1 text-gray-300">${highlight ? highlightMetrics(item) : item}</li>`
+      `<li class="mb-1 text-apple-text-secondary">${highlight ? highlightMetrics(item) : item}</li>`
     ).join('');
   };
 
@@ -499,38 +499,38 @@ function openProjectModal(project) {
   modalContent.innerHTML = `
     <div class="project-modal-header mb-6">
       <div class="flex flex-wrap gap-2 mb-2">
-        <span class="px-3 py-1 text-xs font-bold text-black bg-[#ffdb70] rounded-full">${project.company}</span>
+        <span class="px-3 py-1 text-xs font-bold text-white bg-apple-blue rounded-full">${project.company}</span>
         <span class="px-3 py-1 text-xs font-medium text-gray-400 border border-gray-700 rounded-full">${project.period}</span>
       </div>
-      <h3 class="text-2xl font-bold text-white mb-2">${data.title}</h3>
+      <h3 class="text-2xl font-bold text-apple-text-primary mb-2">${data.title}</h3>
     </div>
 
     ${heroImageSrc ? `
-    <div class="mb-6 rounded-xl overflow-hidden border border-[#383838]">
+    <div class="mb-6 rounded-xl overflow-hidden border border-apple-border">
       <img src="${heroImageSrc}" alt="${data.title}" class="w-full h-auto object-cover" onerror="this.parentElement.style.display='none'">
     </div>
     ` : ''}
 
-    <div class="project-modal-hero mb-8 p-4 bg-[#2a2a2a] rounded-xl border border-[#383838]">
-      <p class="text-lg font-medium text-white italic">"${data.hero_summary || details.hero_summary || ''}"</p>
+    <div class="project-modal-hero mb-8 p-4 bg-apple-bg rounded-xl border border-apple-border">
+      <p class="text-lg font-medium text-apple-text-primary italic">"${data.hero_summary || details.hero_summary || ''}"</p>
     </div>
 
     <div class="star-section mb-6">
       <div class="flex items-center gap-3 mb-3">
-        <span class="flex items-center justify-center w-8 h-8 text-sm font-bold text-black bg-[#ffdb70] rounded-full">S</span>
-        <h4 class="text-lg font-bold text-white">${t('background')}</h4>
+        <span class="flex items-center justify-center w-8 h-8 text-sm font-bold text-white bg-apple-blue rounded-full">S</span>
+        <h4 class="text-lg font-bold text-apple-text-primary">${t('background')}</h4>
       </div>
-      <ul class="pl-11 list-disc list-outside ml-4 space-y-2 text-gray-300">
+      <ul class="pl-11 list-disc list-outside ml-4 space-y-2 text-apple-text-secondary">
         ${renderList(details.background)}
       </ul>
     </div>
 
     <div class="star-section mb-6">
       <div class="flex items-center gap-3 mb-3">
-        <span class="flex items-center justify-center w-8 h-8 text-sm font-bold text-black bg-[#ffdb70] rounded-full">T</span>
-        <h4 class="text-lg font-bold text-white">${t('problem')}</h4>
+        <span class="flex items-center justify-center w-8 h-8 text-sm font-bold text-white bg-apple-blue rounded-full">T</span>
+        <h4 class="text-lg font-bold text-apple-text-primary">${t('problem')}</h4>
       </div>
-      <ul class="pl-11 list-disc list-outside ml-4 space-y-2 text-gray-300">
+      <ul class="pl-11 list-disc list-outside ml-4 space-y-2 text-apple-text-secondary">
         ${renderList(details.problem)}
       </ul>
     </div>
@@ -538,10 +538,10 @@ function openProjectModal(project) {
     ${details.hypothesis ? `
     <div class="star-section mb-6">
       <div class="flex items-center gap-3 mb-3">
-        <span class="flex items-center justify-center w-8 h-8 text-sm font-bold text-black bg-[#ffdb70] rounded-full">H</span>
-        <h4 class="text-lg font-bold text-white">가설</h4>
+        <span class="flex items-center justify-center w-8 h-8 text-sm font-bold text-white bg-apple-blue rounded-full">H</span>
+        <h4 class="text-lg font-bold text-apple-text-primary">가설</h4>
       </div>
-      <ul class="pl-11 list-disc list-outside ml-4 space-y-2 text-gray-300">
+      <ul class="pl-11 list-disc list-outside ml-4 space-y-2 text-apple-text-secondary">
         ${renderList(details.hypothesis)}
       </ul>
     </div>
@@ -549,31 +549,31 @@ function openProjectModal(project) {
 
     <div class="star-section mb-6">
       <div class="flex items-center gap-3 mb-3">
-        <span class="flex items-center justify-center w-8 h-8 text-sm font-bold text-black bg-[#ffdb70] rounded-full">A</span>
-        <h4 class="text-lg font-bold text-white">${t('actions')}</h4>
+        <span class="flex items-center justify-center w-8 h-8 text-sm font-bold text-white bg-apple-blue rounded-full">A</span>
+        <h4 class="text-lg font-bold text-apple-text-primary">${t('actions')}</h4>
       </div>
-      <ul class="pl-11 list-disc list-outside ml-4 space-y-2 text-gray-300">
+      <ul class="pl-11 list-disc list-outside ml-4 space-y-2 text-apple-text-secondary">
         ${renderList(details.actions)}
       </ul>
     </div>
 
     <div class="star-section mb-6">
       <div class="flex items-center gap-3 mb-3">
-        <span class="flex items-center justify-center w-8 h-8 text-sm font-bold text-black bg-[#ffdb70] rounded-full">R</span>
-        <h4 class="text-lg font-bold text-white">${t('results')}</h4>
+        <span class="flex items-center justify-center w-8 h-8 text-sm font-bold text-white bg-apple-blue rounded-full">R</span>
+        <h4 class="text-lg font-bold text-apple-text-primary">${t('results')}</h4>
       </div>
-      <ul class="pl-11 list-disc list-outside ml-4 space-y-2 text-gray-300">
+      <ul class="pl-11 list-disc list-outside ml-4 space-y-2 text-apple-text-secondary">
         ${renderList(details.results, true)}
       </ul>
     </div>
 
     ${(details.lesson_learned && details.lesson_learned.length > 0) ? `
-    <div class="star-section mb-6 pt-6 border-t border-[#383838]">
+    <div class="star-section mb-6 pt-6 border-t border-apple-border">
       <div class="flex items-center gap-3 mb-3">
-        <span class="flex items-center justify-center w-8 h-8 text-sm font-bold text-black bg-gray-400 rounded-full">L</span>
-        <h4 class="text-lg font-bold text-white">${t('lessons')}</h4>
+        <span class="flex items-center justify-center w-8 h-8 text-sm font-bold text-white bg-apple-blue rounded-full">L</span>
+        <h4 class="text-lg font-bold text-apple-text-primary">${t('lessons')}</h4>
       </div>
-      <ul class="pl-11 list-disc list-outside ml-4 space-y-2 text-gray-400 italic">
+      <ul class="pl-11 list-disc list-outside ml-4 space-y-2 text-apple-text-secondary italic">
         ${renderList(details.lesson_learned)}
       </ul>
     </div>

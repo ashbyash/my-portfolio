@@ -25,11 +25,12 @@
       theme: {
         extend: {
           colors: {
-            'bg-dark': '#121212',
-            'card-bg': '#1e1e1f',
-            'card-dark': '#2a2a2a',
-            'border-gray': '#383838',
-            'gold': '#ffdb70',
+            'apple-bg': '#F5F5F7',
+            'apple-card': '#FFFFFF',
+            'apple-text-primary': '#1D1D1F',
+            'apple-text-secondary': '#86868b',
+            'apple-blue': '#0066CC',
+            'apple-border': '#D2D2D7',
           }
         }
       }
@@ -37,41 +38,41 @@
   </script>
 </head>
 
-<body>
-  <div class="container">
+<body class="bg-apple-bg text-apple-text-primary">
+  <div class="container bg-apple-bg">
     <!-- Sidebar -->
-    <aside class="sticky top-[30px] w-full md:w-[300px] flex-shrink-0 bg-[#1e1e1f] border border-[#383838] rounded-[20px] p-[30px] h-fit md:sticky md:top-[30px] relative top-0" data-sidebar>
+    <aside class="sticky top-[30px] w-full md:w-[300px] flex-shrink-0 bg-apple-card border border-apple-border rounded-[20px] p-[30px] h-fit md:sticky md:top-[30px] relative top-0 shadow-sm" data-sidebar>
       <div class="flex flex-col gap-[30px]">
-        <figure class="w-[180px] h-[180px] mx-auto bg-[#2a2a2a] rounded-[20px] overflow-hidden border border-[#383838]">
+        <figure class="w-[180px] h-[180px] mx-auto bg-apple-bg rounded-[20px] overflow-hidden border border-apple-border">
           <img id="profile-avatar" src="" alt="안승환" class="w-full h-full object-cover block">
         </figure>
         <div class="text-center">
-          <h1 id="profile-name" class="text-white text-lg font-semibold tracking-[-0.25px] mb-3" title="안승환">안승환</h1>
-          <p id="profile-title" class="text-white bg-[#2a2a2a] text-[13px] font-normal w-max mx-auto px-4 py-1.5 rounded-lg">Product Manager</p>
+          <h1 id="profile-name" class="text-apple-text-primary text-lg font-semibold tracking-[-0.25px] mb-3" title="안승환">안승환</h1>
+          <p id="profile-title" class="text-apple-text-primary bg-apple-bg text-[13px] font-normal w-max mx-auto px-4 py-1.5 rounded-lg">Product Manager</p>
         </div>
         <div class="flex flex-col gap-5">
-          <div class="w-full h-px bg-[#383838]"></div>
+          <div class="w-full h-px bg-apple-border"></div>
           <ul class="flex flex-col gap-4">
             <li class="flex items-start gap-4">
-              <div class="w-10 h-10 rounded-[10px] flex justify-center items-center text-lg text-[#ffdb70] bg-[#2a2a2a] border border-[#383838] flex-shrink-0">
+              <div class="w-10 h-10 rounded-[10px] flex justify-center items-center text-lg text-apple-blue bg-apple-bg border border-apple-border flex-shrink-0">
                 <ion-icon name="mail-outline" style="--ionicon-stroke-width: 35px;"></ion-icon>
               </div>
               <div class="flex-1">
-                <p class="text-[rgba(255,255,255,0.7)] text-[11px] uppercase mb-0.5">Email</p>
-                <a id="profile-email" href="mailto:pagebyseungwhan@gmail.com" class="text-white text-[13px] block">pagebyseungwhan@gmail.com</a>
+                <p class="text-apple-text-secondary text-[11px] uppercase mb-0.5">Email</p>
+                <a id="profile-email" href="mailto:pagebyseungwhan@gmail.com" class="text-apple-text-primary text-[13px] block">pagebyseungwhan@gmail.com</a>
               </div>
             </li>
             <li class="flex items-start gap-4">
-              <div class="w-10 h-10 rounded-[10px] flex justify-center items-center text-lg text-[#ffdb70] bg-[#2a2a2a] border border-[#383838] flex-shrink-0">
+              <div class="w-10 h-10 rounded-[10px] flex justify-center items-center text-lg text-apple-blue bg-apple-bg border border-apple-border flex-shrink-0">
                 <ion-icon name="phone-portrait-outline" style="--ionicon-stroke-width: 35px;"></ion-icon>
               </div>
               <div class="flex-1">
-                <p class="text-[rgba(255,255,255,0.7)] text-[11px] uppercase mb-0.5">Phone</p>
-                <a id="profile-phone" href="tel:010-2055-2691" class="text-white text-[13px] block">010-2055-2691</a>
+                <p class="text-apple-text-secondary text-[11px] uppercase mb-0.5">Phone</p>
+                <a id="profile-phone" href="tel:010-2055-2691" class="text-apple-text-primary text-[13px] block">010-2055-2691</a>
               </div>
             </li>
           </ul>
-          <div class="w-full h-px bg-[#383838]"></div>
+          <div class="w-full h-px bg-apple-border"></div>
           <ul id="social-list" class="flex justify-start items-center gap-[15px] pl-[7px]">
             <!-- Social links will be dynamically rendered here -->
           </ul>
@@ -80,17 +81,17 @@
     </aside>
 
     <!-- Main Container -->
-    <main class="main-content">
+    <main class="main-content bg-apple-card border border-apple-border">
     <!-- About Section -->
     <section id="about-section"></section>
 
     <!-- Experience Section -->
     <section id="experience-section" class="timeline">
       <div class="title-wrapper">
-        <div class="icon-box">
+        <div class="icon-box bg-apple-bg border border-apple-border text-apple-blue">
           <ion-icon name="book-outline"></ion-icon>
 			</div>
-        <h3 class="h3">Experience</h3>
+        <h3 class="h3 text-apple-text-primary">Experience</h3>
 		</div>
       <ol id="experience-list"></ol>
 	</section>
@@ -98,27 +99,27 @@
     <!-- Education Section -->
     <section id="education-section" class="timeline">
       <div class="title-wrapper">
-        <div class="icon-box">
+        <div class="icon-box bg-apple-bg border border-apple-border text-apple-blue">
           <ion-icon name="book-outline"></ion-icon>
         </div>
-        <h3 class="h3">Education</h3>
+        <h3 class="h3 text-apple-text-primary">Education</h3>
       </div>
       <ol id="education-list" class="timeline-list"></ol>
     </section>
 
     <!-- Skills Section -->
     <section id="skills-section" class="skill">
-      <h3 class="h3 skills-title">My skills</h3>
+      <h3 class="h3 skills-title text-apple-text-primary">My skills</h3>
       <ul id="skills-list" class="skills-list content-card"></ul>
     </section>
 
     <!-- Portfolio Section -->
     <section id="portfolio-section">
       <div class="title-wrapper">
-        <div class="icon-box">
+        <div class="icon-box bg-apple-bg border border-apple-border text-apple-blue">
           <ion-icon name="briefcase-outline"></ion-icon>
         </div>
-        <h3 class="h3">Portfolio</h3>
+        <h3 class="h3 text-apple-text-primary">Portfolio</h3>
       </div>
       <div id="project-grid"></div>
     </section>
