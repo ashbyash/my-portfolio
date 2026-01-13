@@ -42,6 +42,61 @@
       transition: opacity 0.3s ease, visibility 0.3s ease;
     }
 
+    /* Reduce excessive vertical spacing for resume / portfolio / blog */
+    article.resume,
+    article.portfolio,
+    article.blog {
+      padding-top: 20px;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+    }
+
+    article.resume section,
+    article.portfolio section,
+    article.blog section {
+      margin-bottom: 16px;
+    }
+
+    /* About spacing tighten */
+    article.about {
+      padding-top: 20px;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+    }
+
+    article.about .about-text p {
+      margin-bottom: 10px;
+    }
+
+    article.about .service {
+      margin-top: 12px;
+      margin-bottom: 12px;
+    }
+
+    article.about .service-list {
+      gap: 12px;
+    }
+
+    article.about .service-item {
+      padding: 12px 0;
+    }
+
+    .timeline,
+    .projects,
+    .blog-posts {
+      padding: 0;
+      margin: 0;
+    }
+
+    .project-list {
+      margin-top: 12px;
+      gap: 16px;
+    }
+
+    .blog-posts-list {
+      gap: 16px;
+    }
+
     .project-modal-container.active {
       opacity: 1;
       visibility: visible;
@@ -317,7 +372,7 @@
   </style>
 </head>
 
-<body>
+<body class="bg-white text-[#333] font-[Inter,system-ui,sans-serif]">
 
   <!--
     - #MAIN
@@ -597,188 +652,29 @@
       -->
 
       <article id="resume" class="resume active" data-page="resume">
-
         <header>
-          <h2 class="h2 article-title">Resume</h2>
+          <h2 class="h2 article-title">Experience</h2>
         </header>
 
-        <section class="timeline">
-
-          <div class="title-wrapper">
-            <div class="icon-box">
-              <ion-icon name="book-outline"></ion-icon>
+        <section class="py-8">
+          <div class="space-y-6">
+            <div class="border-l-2 border-gray-200 pl-4">
+              <p class="text-sm text-gray-500">2024.08 - Present</p>
+              <h3 class="text-lg font-semibold text-gray-900">Senior Product Manager</h3>
+              <p class="text-sm text-gray-600 mt-1">Cross-functional leadership, roadmap, KPI ownership</p>
             </div>
-
-            <h3 class="h3">Education</h3>
-          </div>
-
-          <ol class="timeline-list">
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">University school of the arts</h4>
-
-              <span>2007 — 2008</span>
-
-              <p class="timeline-text">
-                Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et
-                quas molestias
-                exceptur.
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">New york academy of art</h4>
-
-              <span>2006 — 2007</span>
-
-              <p class="timeline-text">
-                Ratione voluptatem sequi nesciunt, facere quisquams facere menda ossimus, omnis voluptas assumenda est
-                omnis..
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">High school of art and design</h4>
-
-              <span>2002 — 2004</span>
-
-              <p class="timeline-text">
-                Duis aute irure dolor in reprehenderit in voluptate, quila voluptas mag odit aut fugit, sed consequuntur
-                magni dolores
-                eos.
-              </p>
-
-            </li>
-
-          </ol>
-
-        </section>
-
-        <section class="timeline">
-
-          <div class="title-wrapper">
-            <div class="icon-box">
-              <ion-icon name="book-outline"></ion-icon>
+            <div class="border-l-2 border-gray-200 pl-4">
+              <p class="text-sm text-gray-500">2022.03 - 2024.08</p>
+              <h3 class="text-lg font-semibold text-gray-900">Product Manager</h3>
+              <p class="text-sm text-gray-600 mt-1">Growth, experimentation, UX optimization</p>
             </div>
-
-            <h3 class="h3">Experience</h3>
+            <div class="border-l-2 border-gray-200 pl-4">
+              <p class="text-sm text-gray-500">2019.01 - 2022.02</p>
+              <h3 class="text-lg font-semibold text-gray-900">Associate Product Manager</h3>
+              <p class="text-sm text-gray-600 mt-1">MVP delivery, backlog grooming, analytics</p>
+            </div>
           </div>
-
-          <ol class="timeline-list">
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Creative director</h4>
-
-              <span>2015 — Present</span>
-
-              <p class="timeline-text">
-                Nemo enim ipsam voluptatem blanditiis praesentium voluptum delenit atque corrupti, quos dolores et qvuas
-                molestias
-                exceptur.
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Art director</h4>
-
-              <span>2013 — 2015</span>
-
-              <p class="timeline-text">
-                Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et
-                quas molestias
-                exceptur.
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Web designer</h4>
-
-              <span>2010 — 2013</span>
-
-              <p class="timeline-text">
-                Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et
-                quas molestias
-                exceptur.
-              </p>
-
-            </li>
-
-          </ol>
-
         </section>
-
-        <section class="skill">
-
-          <h3 class="h3 skills-title">My skills</h3>
-
-          <ul class="skills-list content-card">
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">Web design</h5>
-                <data value="80">80%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 80%;"></div>
-              </div>
-
-            </li>
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">Graphic design</h5>
-                <data value="70">70%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 70%;"></div>
-              </div>
-
-            </li>
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">Branding</h5>
-                <data value="90">90%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 90%;"></div>
-              </div>
-
-            </li>
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">WordPress</h5>
-                <data value="50">50%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 50%;"></div>
-              </div>
-
-            </li>
-
-          </ul>
-
-        </section>
-
       </article>
 
 
@@ -797,64 +693,12 @@
 
         <section class="projects">
 
-          <ul class="filter-list">
-
-            <li class="filter-item">
-              <button class="active" data-filter-btn>All</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>CLASSUM</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Modern Lion</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Dreamary</button>
-            </li>
-
-          </ul>
-
-          <div class="filter-select-box">
-
-            <button class="filter-select" data-select>
-
-              <div class="select-value" data-selecct-value>Select category</div>
-
-              <div class="select-icon">
-                <ion-icon name="chevron-down"></ion-icon>
-              </div>
-
-            </button>
-
-            <ul class="select-list">
-
-              <li class="select-item">
-                <button data-select-item>All</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>CLASSUM</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Modern Lion</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Dreamary</button>
-              </li>
-
-            </ul>
-
+          <div class="mt-4">
+            <!-- Dynamic Project Grid -->
+            <div id="project-list" class="grid gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+              <!-- Projects will be injected here dynamically -->
+            </div>
           </div>
-
-          <!-- Dynamic Project List - populated by JavaScript -->
-          <ul class="project-list grid gap-6 md:grid-cols-2 xl:grid-cols-3" id="project-list">
-            <!-- Projects will be injected here dynamically -->
-          </ul>
 
         </section>
 

@@ -79,24 +79,26 @@ function renderProjects() {
 
     // Tailwind-based card layout (Modern Minimalist)
     li.innerHTML = `
-      <div class="group h-full bg-slate-900/70 border border-slate-800 rounded-2xl p-5 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-slate-700 hover:shadow-lg">
-        <div class="relative h-48 w-full mb-4 overflow-hidden rounded-xl bg-slate-800/70 flex items-center justify-center">
+      <div class="group h-full bg-white border border-gray-200 rounded-2xl p-5 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-md">
+        <div class="relative h-48 w-full mb-4 overflow-hidden rounded-xl bg-gray-100 flex items-center justify-center">
           <img src="./assets/images/${project.id}.jpg"
                alt="${data.title}"
                class="project-image hidden w-full h-full object-cover transition duration-300 group-hover:scale-[1.02]">
-          <div class="placeholder flex items-center justify-center w-full h-full bg-gradient-to-br from-slate-800 to-slate-900 text-amber-300 font-semibold text-2xl">
+          <div class="placeholder flex items-center justify-center w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 text-gray-500 font-semibold text-2xl">
             ${getInitials(data.title || project.company)}
           </div>
         </div>
         <div class="space-y-2">
-          <div class="flex items-center justify-between text-sm text-slate-400">
-            <span class="font-semibold text-amber-300">${project.company}</span>
+          <div class="flex items-center justify-between text-sm text-gray-500">
+            <span class="font-medium text-gray-700">${project.company}</span>
             <span>${project.period}</span>
           </div>
-          <h3 class="project-title text-lg font-semibold text-slate-50 leading-snug">${data.title}</h3>
-          <p class="text-sm text-slate-300 leading-relaxed">${data.hero_summary || ''}</p>
+          <h3 class="project-title text-lg font-semibold text-gray-900 leading-snug">${data.title}</h3>
+          <p class="text-sm text-gray-700 leading-relaxed">${data.hero_summary || ''}</p>
           ${data.results && data.results.length
-            ? `<p class="text-sm text-amber-200 font-semibold">• ${highlightMetrics(data.results[0])}</p>`
+            ? `<ul class="text-sm text-gray-700 list-disc list-inside space-y-1">
+                 ${data.results.slice(0, 2).map(r => `<li>${highlightMetrics(r)}</li>`).join('')}
+               </ul>`
             : ''
           }
         </div>
