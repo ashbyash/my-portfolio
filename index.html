@@ -1,725 +1,1135 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <head>
-	<title>Product Manager 안승환</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>안승환 | Senior Product Manager</title>
 
-	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!--
+    - favicon
+  -->
+  <link rel="shortcut icon" href="./assets/images/logo.ico" type="image/x-icon">
 
-	<link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
-	<link rel="stylesheet" href="css/animate.css">
+  <!--
+    - custom css link
+  -->
+  <link rel="stylesheet" href="./assets/css/style.css">
 
-	<link rel="stylesheet" href="css/owl.carousel.min.css">
-	<link rel="stylesheet" href="css/owl.theme.default.min.css">
-	<link rel="stylesheet" href="css/magnific-popup.css">
+  <!--
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-	<link rel="stylesheet" href="css/aos.css">
+  <style>
+    /* Project Modal Styles */
+    .project-modal-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 20;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
 
-	<link rel="stylesheet" href="css/ionicons.min.css">
+    .project-modal-container.active {
+      opacity: 1;
+      visibility: visible;
+    }
 
-	<link rel="stylesheet" href="css/flaticon.css">
-	<link rel="stylesheet" href="css/icomoon.css">
-	<link rel="stylesheet" href="css/style.css">
+    .project-modal-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: hsla(0, 0%, 0%, 0.8);
+      z-index: 1;
+    }
+
+    .project-modal {
+      position: relative;
+      background: hsl(240, 2%, 13%);
+      border-radius: 16px;
+      max-width: 800px;
+      width: 90%;
+      max-height: 85vh;
+      overflow-y: auto;
+      z-index: 2;
+      padding: 30px;
+      transform: scale(0.95);
+      transition: transform 0.3s ease;
+    }
+
+    .project-modal-container.active .project-modal {
+      transform: scale(1);
+    }
+
+    .project-modal .modal-close-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: hsl(240, 1%, 18%);
+      border: none;
+      border-radius: 8px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: hsl(0, 0%, 84%);
+      font-size: 18px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .project-modal .modal-close-btn:hover {
+      background: hsl(240, 1%, 25%);
+    }
+
+    .project-modal-header {
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid hsl(0, 0%, 22%);
+    }
+
+    .project-modal-header .company-badge {
+      display: inline-block;
+      background: linear-gradient(to bottom right, hsl(45, 100%, 71%), hsl(35, 100%, 68%));
+      color: hsl(0, 0%, 0%);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .project-modal-header .period {
+      color: hsl(0, 0%, 62%);
+      font-size: 13px;
+      margin-left: 10px;
+    }
+
+    .project-modal-header h3 {
+      color: hsl(0, 0%, 98%);
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 1.4;
+      margin-top: 10px;
+    }
+
+    .project-modal-hero {
+      background: linear-gradient(135deg, hsla(45, 100%, 71%, 0.1), hsla(35, 100%, 68%, 0.05));
+      border-left: 3px solid hsl(45, 100%, 71%);
+      padding: 15px 20px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 25px;
+    }
+
+    .project-modal-hero p {
+      color: hsl(0, 0%, 84%);
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    .star-section {
+      margin-bottom: 25px;
+    }
+
+    .star-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .star-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .star-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(to bottom right, hsl(45, 100%, 71%), hsl(35, 100%, 68%));
+      color: hsl(0, 0%, 0%);
+      font-weight: 700;
+      font-size: 12px;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+
+    .star-icon-alt {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, hsl(142, 76%, 36%), hsl(142, 69%, 58%));
+      color: hsl(0, 0%, 100%);
+      font-weight: 700;
+      font-size: 12px;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+
+    .star-label h4 {
+      color: hsl(0, 0%, 98%);
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .star-content {
+      color: hsl(0, 0%, 75%);
+      font-size: 14px;
+      line-height: 1.7;
+      padding-left: 38px;
+    }
+
+    .star-list {
+      list-style: none;
+      padding-left: 38px;
+    }
+
+    .star-list li {
+      color: hsl(0, 0%, 75%);
+      font-size: 14px;
+      line-height: 1.7;
+      padding-left: 18px;
+      position: relative;
+      margin-bottom: 8px;
+    }
+
+    .star-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 6px;
+      height: 6px;
+      background: hsl(45, 100%, 71%);
+      border-radius: 50%;
+    }
+
+    .star-lessons {
+      background: hsla(142, 76%, 36%, 0.1);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .star-lessons .star-list li::before {
+      background: hsl(142, 69%, 58%);
+    }
+
+    /* Scrollbar styling for modal */
+    .project-modal::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .project-modal::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .project-modal::-webkit-scrollbar-thumb {
+      background: hsl(0, 0%, 30%);
+      border-radius: 3px;
+    }
+
+    /* Project card hover enhancements */
+    .project-item {
+      cursor: pointer;
+    }
+
+    .project-item .project-title {
+      transition: color 0.2s;
+    }
+
+    .project-item:hover .project-title {
+      color: hsl(45, 100%, 71%);
+    }
+
+    /* ============================================
+       One-Pager Layout Overrides
+       ============================================ */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Show all articles in vertical scroll */
+    article.about,
+    article.resume,
+    article.portfolio,
+    article.blog,
+    article.contact {
+      display: block !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+
+    /* Section spacing for one-pager */
+    article {
+      margin-bottom: 30px;
+      scroll-margin-top: 20px;
+    }
+
+    /* Navbar anchor links styling */
+    .navbar-link {
+      text-decoration: none;
+    }
+
+    .navbar-link.active {
+      color: hsl(45, 100%, 71%);
+    }
+
+    /* Premium dark theme from design-system.md */
+    :root {
+      --bg-primary: #121212;
+      --bg-card: #1e1e1f;
+      --accent-gold: #ffdb70;
+    }
+
+    /* Impact Highlighting for metrics */
+    .metric-highlight {
+      color: #ffdb70;
+      font-weight: 600;
+    }
+
+    .star-list li strong,
+    .star-content strong {
+      color: #ffdb70;
+      font-weight: 600;
+    }
+  </style>
 </head>
 
-<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
-
-
-	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target" id="ftco-navbar">
-		<div class="container">
-			<a class="navbar-brand" href="index.html" id="nav-brand"><span>A</span>hn SeungHwan</a>
-			<button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button" data-toggle="collapse"
-				data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="oi oi-menu"></span> Menu
-			</button>
-
-			<div class="collapse navbar-collapse" id="ftco-nav">
-				<ul class="navbar-nav nav ml-auto">
-					<li class="nav-item"><a href="#home-section" class="nav-link"><span data-i18n="nav.home">Home</span></a></li>
-					<li class="nav-item"><a href="#about-section" class="nav-link"><span data-i18n="nav.about">About</span></a></li>
-					<li class="nav-item"><a href="#projects-section" class="nav-link"><span data-i18n="nav.projects">Projects</span></a></li>
-					<li class="nav-item"><a href="#contact-section" class="nav-link"><span data-i18n="nav.contact">Contact</span></a></li>
-					<li class="nav-item">
-						<button id="language-toggle" class="btn btn-sm btn-outline-light ml-2" data-lang="ko" style="border: 1px solid rgba(255,255,255,0.5); color: #fff; padding: 0.25rem 0.75rem; font-size: 0.875rem;">EN</button>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-	<section class="hero-wrap js-fullheight" id="home-section">
-		<div class="overlay"></div>
-		<div class="container">
-			<div class="row no-gutters slider-text js-fullheight justify-content-center align-items-center">
-				<div class="col-lg-8 col-md-6 ftco-animate d-flex align-items-center">
-					<div class="text text-center">
-						<span class="subheading" data-i18n="hero.greeting">Hey! I am</span>
-						<h1 id="hero-name">안승환</h1>
-						<h2>I'm a
-							<span id="hero-roles" class="txt-rotate" data-period="500"
-								data-rotate='["Product Manager", "PM/PO", "6년차"]'></span>
-						</h2>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="mouse">
-			<a href="#" class="mouse-icon">
-				<div class="mouse-wheel"><span class="ion-ios-arrow-round-down"></span></div>
-			</a>
-		</div>
-	</section>
-
-	<section class="ftco-about img ftco-section ftco-no-pt ftco-no-pb" id="about-section">
-		<div class="container">
-			<div class="row d-flex no-gutters">
-				<div class="col-md-6 col-lg-6 d-flex">
-					<div class="img-about img d-flex align-items-stretch">
-						<div class="overlay"></div>
-						<div class="img d-flex align-self-stretch align-items-center"
-							style="background-image:url(images/about.jpg);">
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg-6 pl-md-5 py-5">
-					<div class="row justify-content-start pb-3">
-						<div class="col-md-12 heading-section ftco-animate">
-							<h1 class="big">About</h1>
-							<h2 class="mb-4" data-i18n="about.title">About Me</h2>
-							<p id="about-description" data-i18n="about.description">사용자 중심의 제품을 설계하고, 기술적 이해를 바탕으로 팀과 함께 문제를 해결하는 6년차 프로덕트 매니저입니다.</p>
-							<ul class="about-info mt-4 px-md-0 px-2">
-								<li class="d-flex"><span data-i18n="about.name">Name:</span> <span id="about-name">안승환</span></li>
-								<li class="d-flex"><span data-i18n="about.location">Location:</span> <span>Seoul, Korea</span></li>
-								<li class="d-flex"><span>Email:</span> <span>your-email@example.com</span></li>
-							</ul>
-						</div>
-					</div>
-					<div class="counter-wrap ftco-animate d-flex mt-md-3">
-						<div class="text">
-							<p class="mb-4">
-								<span class="number" data-number="6">0</span>
-								<span data-i18n="about.experience">Years Experience</span>
-							</p>
-							<p><a target="_blank"
-									href="#"
-									class="btn btn-primary py-3 px-3" data-i18n="about.downloadResume">이력서 다운받기</a></p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- Projects Section - Dynamically rendered from projects.json -->
-	<section class="ftco-section ftco-no-pb" id="projects-section">
-		<div class="container">
-			<div class="row justify-content-center mb-5 pb-3">
-				<div class="col-md-10 heading-section text-center ftco-animate">
-					<h1 class="big big-2">Projects</h1>
-					<h2 class="mb-4" data-i18n="projects.title">Projects</h2>
-					<p data-i18n="projects.subtitle">STAR 프레임워크 기반의 프로젝트 성과를 확인하세요.</p>
-				</div>
-			</div>
-			<!-- Dynamic Projects Container -->
-			<div class="row no-gutters" id="projects-container">
-				<!-- Projects will be rendered here by scripts.js -->
-			</div>
-		</div>
-	</section>
-
-	<section class="ftco-section ftco-hireme img" style="background-image: url(images/bg_1.jpg)">
-		<div class="overlay"></div>
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-md-7 ftco-animate text-center">
-					<h2 id="cta-heading">함께할 <span>회사를 찾는 중</span> 입니다.</h2>
-					<p data-i18n="cta.description">새로운 도전과 성장의 기회를 찾고 있습니다.</p>
-					<p class="mb-0"><a href="#contact-section" class="btn btn-primary py-3 px-5" data-i18n="cta.contact">연락주세요</a></p>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<section class="ftco-section contact-section ftco-no-pb" id="contact-section">
-		<div class="container">
-			<div class="row justify-content-center mb-5 pb-3">
-				<div class="col-md-7 heading-section text-center ftco-animate">
-					<h1 class="big big-2">Contact</h1>
-					<h2 class="mb-4" data-i18n="contact.title">Contact Me</h2>
-					<p data-i18n="contact.description">새로운 기회에 열려있습니다. 연락주세요.</p>
-				</div>
-			</div>
-
-			<div class="row d-flex contact-info mb-5">
-				<div class="col-md-6 col-lg-4 d-flex ftco-animate">
-					<div class="align-self-stretch box text-center p-4 shadow">
-						<div class="icon d-flex align-items-center justify-content-center">
-							<span class="icon-paper-plane"></span>
-						</div>
-						<div>
-							<h3 class="mb-4" data-i18n="contact.email">Email</h3>
-							<p><a href="mailto:your-email@example.com">your-email@example.com</a></p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg-4 d-flex ftco-animate">
-					<div class="align-self-stretch box text-center p-4 shadow">
-						<div class="icon d-flex align-items-center justify-content-center">
-							<span class="icon-phone2"></span>
-						</div>
-						<div>
-							<h3 class="mb-4" data-i18n="contact.phone">Phone</h3>
-							<p><a href="tel://01012345678">+82-10-1234-5678</a></p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg-4 d-flex ftco-animate">
-					<div class="align-self-stretch box text-center p-4 shadow">
-						<div class="icon d-flex align-items-center justify-content-center">
-							<span class="icon-globe"></span>
-						</div>
-						<div>
-							<h3 class="mb-4">LinkedIn</h3>
-							<p><a href="#" target="_blank">linkedin.com/in/yourprofile</a></p>
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</div>
-	</section>
-
-
-	<footer class="ftco-footer ftco-section">
-		<div class="container">
-
-			<div class="row">
-				<div class="col-md-12 text-center">
-					<p>
-						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-						Copyright &copy;
-						<script>document.write(new Date().getFullYear());</script> All rights reserved | This template
-						is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a
-							href="https://colorlib.com" target="_blank">Colorlib</a>
-						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-					</p>
-				</div>
-			</div>
-		</div>
-	</footer>
-
-
-
-	<!-- loader -->
-	<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
-			<circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-			<circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-				stroke="#F96D00" />
-		</svg></div>
-
-
-	<script src="js/jquery.min.js"></script>
-	<script src="js/jquery-migrate-3.0.1.min.js"></script>
-	<script src="js/popper.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.easing.1.3.js"></script>
-	<script src="js/jquery.waypoints.min.js"></script>
-	<script src="js/jquery.stellar.min.js"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/jquery.magnific-popup.min.js"></script>
-	<script src="js/aos.js"></script>
-	<script src="js/jquery.animateNumber.min.js"></script>
-	<script src="js/scrollax.min.js"></script>
-
-	<script src="js/main.js"></script>
-	<script src="js/scripts.js"></script>
-
-	<!-- Apple-style Modal -->
-	<div id="project-modal" class="project-modal">
-		<div id="modal-content" class="modal-content"></div>
-	</div>
-
-	<!-- Custom Styles for Bento Grid and Modal -->
-	<style>
-		/* Typography */
-		body {
-			font-family: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-			-webkit-font-smoothing: antialiased;
-			-moz-osx-font-smoothing: grayscale;
-		}
-
-		/* Language Toggle Button */
-		#language-toggle {
-			font-family: 'Inter', -apple-system, sans-serif;
-			font-weight: 500;
-			transition: all 0.2s ease;
-		}
-
-		#language-toggle:hover {
-			background: rgba(255, 255, 255, 0.1);
-			border-color: rgba(255, 255, 255, 0.8);
-		}
-
-		/* Bento Grid */
-		.bento-grid-container {
-			width: 100%;
-			padding: 2rem 0;
-		}
-
-		.bento-grid {
-			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-			gap: 1.5rem;
-			max-width: 1400px;
-			margin: 0 auto;
-			padding: 0 1rem;
-		}
-
-		@media (min-width: 768px) {
-			.bento-grid {
-				grid-template-columns: repeat(3, 1fr);
-				gap: 2rem;
-			}
-		}
-
-		.bento-card {
-			background: rgba(255, 255, 255, 0.95);
-			backdrop-filter: blur(20px);
-			-webkit-backdrop-filter: blur(20px);
-			border-radius: 24px;
-			padding: 2rem;
-			cursor: pointer;
-			transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-			border: 1px solid rgba(0, 0, 0, 0.05);
-			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
-			position: relative;
-			overflow: hidden;
-		}
-
-		.bento-card::before {
-			content: '';
-			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			height: 4px;
-			background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-			opacity: 0;
-			transition: opacity 0.3s ease;
-		}
-
-		.bento-card:hover {
-			transform: translateY(-4px);
-			box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
-			border-color: rgba(102, 126, 234, 0.2);
-		}
-
-		.bento-card:hover::before {
-			opacity: 1;
-		}
-
-		.bento-card.bento-large {
-			grid-row: span 2;
-		}
-
-		.bento-card.bento-medium {
-			grid-row: span 1;
-		}
-
-		.bento-card.bento-small {
-			grid-row: span 1;
-		}
-
-		.bento-card-content {
-			display: flex;
-			flex-direction: column;
-			height: 100%;
-		}
-
-		.bento-card-header {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			margin-bottom: 1rem;
-		}
-
-		.bento-company {
-			font-size: 0.875rem;
-			font-weight: 600;
-			color: #667eea;
-			text-transform: uppercase;
-			letter-spacing: 0.5px;
-		}
-
-		.bento-period {
-			font-size: 0.75rem;
-			color: #6b7280;
-			font-weight: 400;
-		}
-
-		.bento-title {
-			font-size: 1.5rem;
-			font-weight: 600;
-			line-height: 1.4;
-			color: #111827;
-			margin: 0 0 1rem 0;
-			letter-spacing: -0.02em;
-		}
-
-		.bento-summary {
-			font-size: 0.9375rem;
-			line-height: 1.6;
-			color: #4b5563;
-			margin: 0 0 1rem 0;
-		}
-
-		.bento-metrics {
-			margin: 1rem 0;
-			padding: 1rem;
-			background: rgba(102, 126, 234, 0.05);
-			border-radius: 12px;
-			border-left: 3px solid #667eea;
-		}
-
-		.bento-metric-label {
-			font-size: 0.75rem;
-			font-weight: 600;
-			color: #667eea;
-			text-transform: uppercase;
-			letter-spacing: 0.5px;
-			display: block;
-			margin-bottom: 0.5rem;
-		}
-
-		.bento-metric-text {
-			font-size: 0.875rem;
-			line-height: 1.5;
-			color: #374151;
-			margin: 0;
-		}
-
-		.bento-card-footer {
-			margin-top: auto;
-			padding-top: 1rem;
-			border-top: 1px solid rgba(0, 0, 0, 0.05);
-		}
-
-		.bento-read-more {
-			font-size: 0.875rem;
-			font-weight: 500;
-			color: #667eea;
-			transition: color 0.2s ease;
-		}
-
-		.bento-card:hover .bento-read-more {
-			color: #764ba2;
-		}
-
-		/* Modal Styles */
-		.project-modal {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background: rgba(0, 0, 0, 0.5);
-			backdrop-filter: blur(8px);
-			-webkit-backdrop-filter: blur(8px);
-			z-index: 10000;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			padding: 2rem;
-			opacity: 0;
-			visibility: hidden;
-			transition: opacity 0.3s ease, visibility 0.3s ease;
-			overflow-y: auto;
-		}
-
-		.project-modal.active {
-			opacity: 1;
-			visibility: visible;
-		}
-
-		.modal-content {
-			background: rgba(255, 255, 255, 0.98);
-			backdrop-filter: blur(40px);
-			-webkit-backdrop-filter: blur(40px);
-			border-radius: 32px;
-			max-width: 900px;
-			width: 100%;
-			max-height: 90vh;
-			overflow-y: auto;
-			box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-			border: 1px solid rgba(255, 255, 255, 0.2);
-			transform: scale(0.95) translateY(20px);
-			transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-			position: relative;
-		}
-
-		.project-modal.active .modal-content {
-			transform: scale(1) translateY(0);
-		}
-
-		.modal-header {
-			padding: 3rem 3rem 2rem 3rem;
-			border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-			position: relative;
-		}
-
-		.modal-header-top {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			margin-bottom: 1rem;
-		}
-
-		.modal-company {
-			font-size: 0.875rem;
-			font-weight: 600;
-			color: #667eea;
-			text-transform: uppercase;
-			letter-spacing: 0.5px;
-		}
-
-		.modal-period {
-			font-size: 0.875rem;
-			color: #6b7280;
-			font-weight: 400;
-		}
-
-		.modal-title {
-			font-size: 2rem;
-			font-weight: 600;
-			line-height: 1.3;
-			color: #111827;
-			margin: 0;
-			letter-spacing: -0.02em;
-			padding-right: 3rem;
-		}
-
-		.modal-close {
-			position: absolute;
-			top: 2rem;
-			right: 2rem;
-			width: 40px;
-			height: 40px;
-			border: none;
-			background: rgba(0, 0, 0, 0.05);
-			border-radius: 12px;
-			cursor: pointer;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			transition: all 0.2s ease;
-			color: #4b5563;
-		}
-
-		.modal-close:hover {
-			background: rgba(0, 0, 0, 0.1);
-			transform: rotate(90deg);
-		}
-
-		.modal-body {
-			padding: 2rem 3rem 3rem 3rem;
-		}
-
-		/* Hero Summary in Modal */
-		.star-hero {
-			background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-			border-radius: 16px;
-			padding: 1.5rem;
-			margin-bottom: 2.5rem;
-			border-left: 4px solid #667eea;
-		}
-
-		.star-hero-text {
-			font-size: 1.125rem;
-			font-weight: 500;
-			line-height: 1.6;
-			color: #1f2937;
-			margin: 0;
-		}
-
-		/* STAR Section Styles */
-		.star-section {
-			margin-bottom: 2.5rem;
-		}
-
-		.star-section:last-child {
-			margin-bottom: 0;
-		}
-
-		.star-label {
-			font-size: 1.125rem;
-			font-weight: 600;
-			color: #111827;
-			margin: 0 0 1rem 0;
-			letter-spacing: -0.01em;
-			display: flex;
-			align-items: center;
-			gap: 0.75rem;
-		}
-
-		.star-icon {
-			display: inline-flex;
-			align-items: center;
-			justify-content: center;
-			width: 32px;
-			height: 32px;
-			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-			color: white;
-			font-weight: 700;
-			font-size: 0.875rem;
-			border-radius: 8px;
-			flex-shrink: 0;
-		}
-
-		.star-icon-alt {
-			display: inline-flex;
-			align-items: center;
-			justify-content: center;
-			width: 32px;
-			height: 32px;
-			background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-			color: white;
-			font-weight: 700;
-			font-size: 0.875rem;
-			border-radius: 8px;
-			flex-shrink: 0;
-		}
-
-		.star-content {
-			font-size: 1rem;
-			line-height: 1.75;
-			color: #374151;
-			margin: 0;
-			padding-left: 2.75rem;
-		}
-
-		.star-list {
-			list-style: none;
-			padding: 0;
-			margin: 0;
-			padding-left: 2.75rem;
-		}
-
-		.star-list li {
-			font-size: 1rem;
-			line-height: 1.75;
-			color: #374151;
-			padding-left: 1.5rem;
-			position: relative;
-			margin-bottom: 0.75rem;
-		}
-
-		.star-list li::before {
-			content: '';
-			position: absolute;
-			left: 0;
-			top: 0.625rem;
-			width: 6px;
-			height: 6px;
-			background: #667eea;
-			border-radius: 50%;
-		}
-
-		.star-list li:last-child {
-			margin-bottom: 0;
-		}
-
-		/* Results section highlight */
-		.star-results li::before {
-			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-			width: 8px;
-			height: 8px;
-			top: 0.5rem;
-		}
-
-		/* Lessons Learned section */
-		.star-lessons {
-			background: rgba(16, 185, 129, 0.05);
-			border-radius: 16px;
-			padding: 1.5rem;
-			margin-top: 2rem;
-		}
-
-		.star-lessons .star-list {
-			padding-left: 2.75rem;
-		}
-
-		.star-lessons li::before {
-			background: #10b981;
-		}
-
-		/* Responsive */
-		@media (max-width: 768px) {
-			.bento-grid {
-				grid-template-columns: 1fr;
-			}
-
-			.bento-card.bento-large,
-			.bento-card.bento-medium,
-			.bento-card.bento-small {
-				grid-row: span 1;
-			}
-
-			.modal-content {
-				margin: 1rem;
-				border-radius: 24px;
-			}
-
-			.modal-header {
-				padding: 2rem 2rem 1.5rem 2rem;
-			}
-
-			.modal-body {
-				padding: 1.5rem 2rem 2rem 2rem;
-			}
-
-			.modal-title {
-				font-size: 1.5rem;
-				padding-right: 2.5rem;
-			}
-
-			.modal-close {
-				top: 1.5rem;
-				right: 1.5rem;
-			}
-
-			.star-content,
-			.star-list {
-				padding-left: 0;
-			}
-
-			.star-hero {
-				padding: 1.25rem;
-			}
-
-			.star-hero-text {
-				font-size: 1rem;
-			}
-		}
-
-		/* Scrollbar styling for modal */
-		.modal-content::-webkit-scrollbar {
-			width: 8px;
-		}
-
-		.modal-content::-webkit-scrollbar-track {
-			background: transparent;
-		}
-
-		.modal-content::-webkit-scrollbar-thumb {
-			background: rgba(0, 0, 0, 0.2);
-			border-radius: 4px;
-		}
-
-		.modal-content::-webkit-scrollbar-thumb:hover {
-			background: rgba(0, 0, 0, 0.3);
-		}
-	</style>
+<body>
+
+  <!--
+    - #MAIN
+  -->
+
+  <main>
+
+    <!--
+      - #SIDEBAR
+    -->
+
+    <aside class="sidebar" data-sidebar>
+
+      <div class="sidebar-info">
+
+        <figure class="avatar-box">
+          <img src="./assets/images/my-avatar.png" alt="Seunghwan An" width="80">
+        </figure>
+
+        <div class="info-content">
+          <h1 class="name" title="Seunghwan An" id="profile-name">안승환</h1>
+
+          <p class="title" id="profile-title">Product Manager</p>
+        </div>
+
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Contacts</span>
+
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+
+      </div>
+
+      <div class="sidebar-info_more">
+
+        <div class="separator"></div>
+
+        <ul class="contacts-list">
+
+          <li class="contact-item">
+
+            <div class="icon-box">
+              <ion-icon name="mail-outline"></ion-icon>
+            </div>
+
+            <div class="contact-info">
+              <p class="contact-title">Email</p>
+
+              <a href="mailto:seunghwan.an@example.com" class="contact-link">seunghwan.an@example.com</a>
+            </div>
+
+          </li>
+
+          <li class="contact-item">
+
+            <div class="icon-box">
+              <ion-icon name="phone-portrait-outline"></ion-icon>
+            </div>
+
+            <div class="contact-info">
+              <p class="contact-title">Phone</p>
+
+              <a href="tel:+821012345678" class="contact-link">+82-10-1234-5678</a>
+            </div>
+
+          </li>
+
+          <li class="contact-item">
+
+            <div class="icon-box">
+              <ion-icon name="briefcase-outline"></ion-icon>
+            </div>
+
+            <div class="contact-info">
+              <p class="contact-title">Experience</p>
+
+              <span>6+ Years</span>
+            </div>
+
+          </li>
+
+          <li class="contact-item">
+
+            <div class="icon-box">
+              <ion-icon name="location-outline"></ion-icon>
+            </div>
+
+            <div class="contact-info">
+              <p class="contact-title">Location</p>
+
+              <address>Seoul, South Korea</address>
+            </div>
+
+          </li>
+
+        </ul>
+
+        <div class="separator"></div>
+
+        <ul class="social-list">
+
+          <li class="social-item">
+            <a href="#" class="social-link">
+              <ion-icon name="logo-linkedin"></ion-icon>
+            </a>
+          </li>
+
+          <li class="social-item">
+            <a href="#" class="social-link">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+
+        </ul>
+
+      </div>
+
+    </aside>
+
+
+
+
+
+    <!--
+      - #main-content
+    -->
+
+    <div class="main-content">
+
+      <!--
+        - #NAVBAR
+      -->
+
+      <nav class="navbar">
+
+        <ul class="navbar-list">
+
+          <li class="navbar-item">
+            <a href="#about" class="navbar-link active">About</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#resume" class="navbar-link">Resume</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#portfolio" class="navbar-link">Portfolio</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#blog" class="navbar-link">Blog</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#contact" class="navbar-link">Contact</a>
+          </li>
+
+        </ul>
+
+      </nav>
+
+
+
+
+
+      <!--
+        - #ABOUT
+      -->
+
+      <article id="about" class="about active" data-page="about">
+
+        <header>
+          <h2 class="h2 article-title">About me</h2>
+        </header>
+
+        <section class="about-text">
+          <p>
+            사용자 중심의 제품을 설계하고, 기술적 이해를 바탕으로 팀과 함께 문제를 해결하는 6년차 프로덕트 매니저입니다.
+          </p>
+
+          <p>
+            복잡한 비즈니스 요구사항을 명확한 제품 전략으로 전환하고, 데이터 기반의 의사결정을 통해
+            측정 가능한 성과를 만들어냅니다. 엔지니어링 팀과의 긴밀한 협업을 통해 제품의 기술적 품질과
+            사용자 경험을 동시에 향상시키는 것을 중요하게 생각합니다.
+          </p>
+        </section>
+
+
+        <!--
+          - service
+        -->
+
+        <section class="service">
+
+          <h3 class="h3 service-title">What I Do</h3>
+
+          <ul class="service-list">
+
+            <li class="service-item">
+
+              <div class="service-icon-box">
+                <img src="./assets/images/icon-design.svg" alt="product icon" width="40">
+              </div>
+
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Product Strategy</h4>
+
+                <p class="service-item-text">
+                  비즈니스 목표와 사용자 니즈를 연결하는 제품 전략 수립 및 로드맵 설계
+                </p>
+              </div>
+
+            </li>
+
+            <li class="service-item">
+
+              <div class="service-icon-box">
+                <img src="./assets/images/icon-dev.svg" alt="development icon" width="40">
+              </div>
+
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Cross-functional Leadership</h4>
+
+                <p class="service-item-text">
+                  개발, 디자인, 비즈니스 팀과의 협업을 통한 제품 개발 리딩
+                </p>
+              </div>
+
+            </li>
+
+            <li class="service-item">
+
+              <div class="service-icon-box">
+                <img src="./assets/images/icon-app.svg" alt="data icon" width="40">
+              </div>
+
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Data-Driven Decision</h4>
+
+                <p class="service-item-text">
+                  정량적 데이터 분석과 사용자 리서치 기반의 의사결정
+                </p>
+              </div>
+
+            </li>
+
+            <li class="service-item">
+
+              <div class="service-icon-box">
+                <img src="./assets/images/icon-photo.svg" alt="agile icon" width="40">
+              </div>
+
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Agile Execution</h4>
+
+                <p class="service-item-text">
+                  빠른 실행과 반복을 통한 MVP 개발 및 점진적 개선
+                </p>
+              </div>
+
+            </li>
+
+          </ul>
+
+        </section>
+
+
+
+      </article>
+
+
+
+
+
+      <!--
+        - #RESUME
+      -->
+
+      <article id="resume" class="resume active" data-page="resume">
+
+        <header>
+          <h2 class="h2 article-title">Resume</h2>
+        </header>
+
+        <section class="timeline">
+
+          <div class="title-wrapper">
+            <div class="icon-box">
+              <ion-icon name="book-outline"></ion-icon>
+            </div>
+
+            <h3 class="h3">Education</h3>
+          </div>
+
+          <ol class="timeline-list">
+
+            <li class="timeline-item">
+
+              <h4 class="h4 timeline-item-title">University school of the arts</h4>
+
+              <span>2007 — 2008</span>
+
+              <p class="timeline-text">
+                Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et
+                quas molestias
+                exceptur.
+              </p>
+
+            </li>
+
+            <li class="timeline-item">
+
+              <h4 class="h4 timeline-item-title">New york academy of art</h4>
+
+              <span>2006 — 2007</span>
+
+              <p class="timeline-text">
+                Ratione voluptatem sequi nesciunt, facere quisquams facere menda ossimus, omnis voluptas assumenda est
+                omnis..
+              </p>
+
+            </li>
+
+            <li class="timeline-item">
+
+              <h4 class="h4 timeline-item-title">High school of art and design</h4>
+
+              <span>2002 — 2004</span>
+
+              <p class="timeline-text">
+                Duis aute irure dolor in reprehenderit in voluptate, quila voluptas mag odit aut fugit, sed consequuntur
+                magni dolores
+                eos.
+              </p>
+
+            </li>
+
+          </ol>
+
+        </section>
+
+        <section class="timeline">
+
+          <div class="title-wrapper">
+            <div class="icon-box">
+              <ion-icon name="book-outline"></ion-icon>
+            </div>
+
+            <h3 class="h3">Experience</h3>
+          </div>
+
+          <ol class="timeline-list">
+
+            <li class="timeline-item">
+
+              <h4 class="h4 timeline-item-title">Creative director</h4>
+
+              <span>2015 — Present</span>
+
+              <p class="timeline-text">
+                Nemo enim ipsam voluptatem blanditiis praesentium voluptum delenit atque corrupti, quos dolores et qvuas
+                molestias
+                exceptur.
+              </p>
+
+            </li>
+
+            <li class="timeline-item">
+
+              <h4 class="h4 timeline-item-title">Art director</h4>
+
+              <span>2013 — 2015</span>
+
+              <p class="timeline-text">
+                Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et
+                quas molestias
+                exceptur.
+              </p>
+
+            </li>
+
+            <li class="timeline-item">
+
+              <h4 class="h4 timeline-item-title">Web designer</h4>
+
+              <span>2010 — 2013</span>
+
+              <p class="timeline-text">
+                Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et
+                quas molestias
+                exceptur.
+              </p>
+
+            </li>
+
+          </ol>
+
+        </section>
+
+        <section class="skill">
+
+          <h3 class="h3 skills-title">My skills</h3>
+
+          <ul class="skills-list content-card">
+
+            <li class="skills-item">
+
+              <div class="title-wrapper">
+                <h5 class="h5">Web design</h5>
+                <data value="80">80%</data>
+              </div>
+
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 80%;"></div>
+              </div>
+
+            </li>
+
+            <li class="skills-item">
+
+              <div class="title-wrapper">
+                <h5 class="h5">Graphic design</h5>
+                <data value="70">70%</data>
+              </div>
+
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 70%;"></div>
+              </div>
+
+            </li>
+
+            <li class="skills-item">
+
+              <div class="title-wrapper">
+                <h5 class="h5">Branding</h5>
+                <data value="90">90%</data>
+              </div>
+
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 90%;"></div>
+              </div>
+
+            </li>
+
+            <li class="skills-item">
+
+              <div class="title-wrapper">
+                <h5 class="h5">WordPress</h5>
+                <data value="50">50%</data>
+              </div>
+
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 50%;"></div>
+              </div>
+
+            </li>
+
+          </ul>
+
+        </section>
+
+      </article>
+
+
+
+
+
+      <!--
+        - #PORTFOLIO
+      -->
+
+      <article id="portfolio" class="portfolio active" data-page="portfolio">
+
+        <header>
+          <h2 class="h2 article-title">Portfolio</h2>
+        </header>
+
+        <section class="projects">
+
+          <ul class="filter-list">
+
+            <li class="filter-item">
+              <button class="active" data-filter-btn>All</button>
+            </li>
+
+            <li class="filter-item">
+              <button data-filter-btn>CLASSUM</button>
+            </li>
+
+            <li class="filter-item">
+              <button data-filter-btn>Modern Lion</button>
+            </li>
+
+            <li class="filter-item">
+              <button data-filter-btn>Dreamary</button>
+            </li>
+
+          </ul>
+
+          <div class="filter-select-box">
+
+            <button class="filter-select" data-select>
+
+              <div class="select-value" data-selecct-value>Select category</div>
+
+              <div class="select-icon">
+                <ion-icon name="chevron-down"></ion-icon>
+              </div>
+
+            </button>
+
+            <ul class="select-list">
+
+              <li class="select-item">
+                <button data-select-item>All</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>CLASSUM</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>Modern Lion</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>Dreamary</button>
+              </li>
+
+            </ul>
+
+          </div>
+
+          <!-- Dynamic Project List - populated by JavaScript -->
+          <ul class="project-list" id="project-list">
+            <!-- Projects will be injected here dynamically -->
+          </ul>
+
+        </section>
+
+      </article>
+
+      <!-- Project Detail Modal -->
+      <div class="project-modal-container" id="project-modal-container">
+        <div class="project-modal-overlay" id="project-modal-overlay"></div>
+        <section class="project-modal" id="project-modal">
+          <button class="modal-close-btn" id="project-modal-close">
+            <ion-icon name="close-outline"></ion-icon>
+          </button>
+          <div class="project-modal-content" id="project-modal-content">
+            <!-- Modal content will be injected here -->
+          </div>
+        </section>
+      </div>
+
+
+
+
+
+      <!--
+        - #BLOG
+      -->
+
+      <article id="blog" class="blog active" data-page="blog">
+
+        <header>
+          <h2 class="h2 article-title">Blog</h2>
+        </header>
+
+        <section class="blog-posts">
+
+          <ul class="blog-posts-list">
+
+            <li class="blog-post-item">
+              <a href="#">
+
+                <figure class="blog-banner-box">
+                  <img src="./assets/images/blog-1.jpg" alt="Design conferences in 2022" loading="lazy">
+                </figure>
+
+                <div class="blog-content">
+
+                  <div class="blog-meta">
+                    <p class="blog-category">Design</p>
+
+                    <span class="dot"></span>
+
+                    <time datetime="2022-02-23">Fab 23, 2022</time>
+                  </div>
+
+                  <h3 class="h3 blog-item-title">Design conferences in 2022</h3>
+
+                  <p class="blog-text">
+                    Veritatis et quasi architecto beatae vitae dicta sunt, explicabo.
+                  </p>
+
+                </div>
+
+              </a>
+            </li>
+
+            <li class="blog-post-item">
+              <a href="#">
+
+                <figure class="blog-banner-box">
+                  <img src="./assets/images/blog-2.jpg" alt="Best fonts every designer" loading="lazy">
+                </figure>
+
+                <div class="blog-content">
+
+                  <div class="blog-meta">
+                    <p class="blog-category">Design</p>
+
+                    <span class="dot"></span>
+
+                    <time datetime="2022-02-23">Fab 23, 2022</time>
+                  </div>
+
+                  <h3 class="h3 blog-item-title">Best fonts every designer</h3>
+
+                  <p class="blog-text">
+                    Sed ut perspiciatis, nam libero tempore, cum soluta nobis est eligendi.
+                  </p>
+
+                </div>
+
+              </a>
+            </li>
+
+            <li class="blog-post-item">
+              <a href="#">
+
+                <figure class="blog-banner-box">
+                  <img src="./assets/images/blog-3.jpg" alt="Design digest #80" loading="lazy">
+                </figure>
+
+                <div class="blog-content">
+
+                  <div class="blog-meta">
+                    <p class="blog-category">Design</p>
+
+                    <span class="dot"></span>
+
+                    <time datetime="2022-02-23">Fab 23, 2022</time>
+                  </div>
+
+                  <h3 class="h3 blog-item-title">Design digest #80</h3>
+
+                  <p class="blog-text">
+                    Excepteur sint occaecat cupidatat no proident, quis nostrum exercitationem ullam corporis suscipit.
+                  </p>
+
+                </div>
+
+              </a>
+            </li>
+
+            <li class="blog-post-item">
+              <a href="#">
+
+                <figure class="blog-banner-box">
+                  <img src="./assets/images/blog-4.jpg" alt="UI interactions of the week" loading="lazy">
+                </figure>
+
+                <div class="blog-content">
+
+                  <div class="blog-meta">
+                    <p class="blog-category">Design</p>
+
+                    <span class="dot"></span>
+
+                    <time datetime="2022-02-23">Fab 23, 2022</time>
+                  </div>
+
+                  <h3 class="h3 blog-item-title">UI interactions of the week</h3>
+
+                  <p class="blog-text">
+                    Enim ad minim veniam, consectetur adipiscing elit, quis nostrud exercitation ullamco laboris nisi.
+                  </p>
+
+                </div>
+
+              </a>
+            </li>
+
+            <li class="blog-post-item">
+              <a href="#">
+
+                <figure class="blog-banner-box">
+                  <img src="./assets/images/blog-5.jpg" alt="The forgotten art of spacing" loading="lazy">
+                </figure>
+
+                <div class="blog-content">
+
+                  <div class="blog-meta">
+                    <p class="blog-category">Design</p>
+
+                    <span class="dot"></span>
+
+                    <time datetime="2022-02-23">Fab 23, 2022</time>
+                  </div>
+
+                  <h3 class="h3 blog-item-title">The forgotten art of spacing</h3>
+
+                  <p class="blog-text">
+                    Maxime placeat, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  </p>
+
+                </div>
+
+              </a>
+            </li>
+
+            <li class="blog-post-item">
+              <a href="#">
+
+                <figure class="blog-banner-box">
+                  <img src="./assets/images/blog-6.jpg" alt="Design digest #79" loading="lazy">
+                </figure>
+
+                <div class="blog-content">
+
+                  <div class="blog-meta">
+                    <p class="blog-category">Design</p>
+
+                    <span class="dot"></span>
+
+                    <time datetime="2022-02-23">Fab 23, 2022</time>
+                  </div>
+
+                  <h3 class="h3 blog-item-title">Design digest #79</h3>
+
+                  <p class="blog-text">
+                    Optio cumque nihil impedit uo minus quod maxime placeat, velit esse cillum.
+                  </p>
+
+                </div>
+
+              </a>
+            </li>
+
+          </ul>
+
+        </section>
+
+      </article>
+
+
+
+
+
+      <!--
+        - #CONTACT
+      -->
+
+      <article id="contact" class="contact active" data-page="contact">
+
+        <header>
+          <h2 class="h2 article-title">Contact</h2>
+        </header>
+
+        <section class="mapbox" data-mapbox>
+          <figure>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d199666.5651251294!2d-121.58334177520186!3d38.56165006739519!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x809ac672b28397f9%3A0x921f6aaa74197fdb!2sSacramento%2C%20CA%2C%20USA!5e0!3m2!1sen!2sbd!4v1647608789441!5m2!1sen!2sbd"
+              width="400" height="300" loading="lazy"></iframe>
+          </figure>
+        </section>
+
+        <section class="contact-form">
+
+          <h3 class="h3 form-title">Contact Form</h3>
+
+          <form action="#" class="form" data-form>
+
+            <div class="input-wrapper">
+              <input type="text" name="fullname" class="form-input" placeholder="Full name" required data-form-input>
+
+              <input type="email" name="email" class="form-input" placeholder="Email address" required data-form-input>
+            </div>
+
+            <textarea name="message" class="form-input" placeholder="Your Message" required data-form-input></textarea>
+
+            <button class="form-btn" type="submit" disabled data-form-btn>
+              <ion-icon name="paper-plane"></ion-icon>
+              <span>Send Message</span>
+            </button>
+
+          </form>
+
+        </section>
+
+      </article>
+
+    </div>
+
+  </main>
+
+
+
+
+
+
+  <!--
+    - custom js link
+  -->
+  <script src="./assets/js/script.js"></script>
+
+  <!--
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
 </body>
 
