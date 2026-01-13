@@ -262,8 +262,74 @@ function renderProfile() {
   // Update profile avatar
   const profileAvatar = document.getElementById('profile-avatar');
   if (profileAvatar) {
-    profileAvatar.src = profileData.avatar || './assets/images/my-avatar.png';
+    // Use the avatar path from profile.json
+    let avatarPath = profileData.avatar || 'assets/images/my-avatar.png';
+    
+    // Ensure relative path starts with ./ for proper resolution
+    if (!avatarPath.startsWith('./') && !avatarPath.startsWith('/') && !avatarPath.startsWith('http')) {
+      avatarPath = './' + avatarPath;
+    }
+    
+    console.log('Loading profile image from:', avatarPath);
+    profileAvatar.src = avatarPath;
     profileAvatar.alt = profileData.name || 'Profile';
+    
+    // Ensure image is visible
+    profileAvatar.style.display = 'block';
+    
+    // Handle image load errors
+    profileAvatar.onerror = function() {
+      console.error('Failed to load profile image:', avatarPath);
+      // Try alternative paths
+      const alternatives = [
+        './assets/images/my-avatar.png',
+        'assets/images/anseunghwan-profile-github.JPG',
+        './assets/images/anseunghwan-profile-github.JPG'
+      ];
+      
+      let triedPaths = [avatarPath];
+      let currentIndex = 0;
+      
+      const tryNextPath = () => {
+        if (currentIndex < alternatives.length) {
+          const altPath = alternatives[currentIndex];
+          if (!triedPaths.includes(altPath)) {
+            triedPaths.push(altPath);
+            console.log('Trying alternative path:', altPath);
+            this.src = altPath;
+            currentIndex++;
+          } else {
+            currentIndex++;
+            tryNextPath();
+          }
+        } else {
+          // All paths failed, show initials
+          console.warn('All image paths failed, showing initials');
+          this.style.display = 'none';
+          const avatarBox = this.closest('.avatar-box');
+          if (avatarBox && !avatarBox.querySelector('.avatar-initials')) {
+            const initials = document.createElement('div');
+            initials.className = 'avatar-initials';
+            initials.textContent = getInitials(profileData.name || '');
+            initials.style.cssText = 'display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; font-size: 24px; font-weight: 600; color: var(--white-2);';
+            avatarBox.appendChild(initials);
+          }
+        }
+      };
+      
+      // Try next alternative path
+      tryNextPath();
+    };
+    
+    // Ensure image is visible when loaded successfully
+    profileAvatar.onload = function() {
+      console.log('Profile image loaded successfully:', this.src);
+      this.style.display = 'block';
+      const initials = this.closest('.avatar-box')?.querySelector('.avatar-initials');
+      if (initials) {
+        initials.remove();
+      }
+    };
   }
 
   // Update profile name
