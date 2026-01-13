@@ -20,8 +20,8 @@ const PORTFOLIO_FILES = [
   'data/portfolio-05-dreamary-designer-map.json',
   'data/portfolio-06-dreamary-inapp-review.json'
 ];
-const RESUME_DATA_URL = 'data/resume.json';
-const PROFILE_DATA_URL = 'data/profile.json';
+const RESUME_DATA_URL = './data/resume.json';
+const PROFILE_DATA_URL = './data/profile.json';
 
 async function loadProjectsData() {
   try {
@@ -72,9 +72,15 @@ async function loadResumeData() {
 // Load Experience section specifically
 async function loadExperience() {
   try {
+    console.log('Loading experience data from:', RESUME_DATA_URL);
     const response = await fetch(RESUME_DATA_URL);
-    if (!response.ok) throw new Error('Failed to load resume.json');
+    if (!response.ok) {
+      console.error('Failed to load resume.json:', response.status, response.statusText);
+      throw new Error(`Failed to load resume.json: ${response.status} ${response.statusText}`);
+    }
     const data = await response.json();
+    console.log('Resume data loaded:', data);
+    console.log('Experience array:', data.experience);
     resumeData = data; // Store for other functions
     renderExperience();
     return true;
@@ -227,7 +233,25 @@ function renderResumeSections() {
 
 function renderExperience() {
   const container = document.getElementById('experience-list');
-  if (!container || !resumeData) return;
+  console.log('renderExperience called, container:', container);
+  console.log('resumeData:', resumeData);
+  
+  if (!container) {
+    console.error('Experience list container not found!');
+    return;
+  }
+  
+  if (!resumeData) {
+    console.error('Resume data not loaded yet!');
+    return;
+  }
+
+  if (!resumeData.experience || !Array.isArray(resumeData.experience)) {
+    console.error('Experience array not found or invalid:', resumeData);
+    return;
+  }
+
+  console.log('Rendering', resumeData.experience.length, 'experience items');
 
   // Ensure it's an ol element with Tailwind classes matching the CSS design
   if (container.tagName !== 'OL') {
@@ -240,16 +264,21 @@ function renderExperience() {
     container.className = 'text-sm ml-[45px] relative';
   }
 
-  container.innerHTML = (resumeData.experience || []).map((item, index, array) => `
+  container.innerHTML = resumeData.experience.map((item, index, array) => {
+    console.log('Rendering experience item:', item);
+    return `
     <li class="relative pb-5 ${index !== array.length - 1 ? 'before:content-[""] before:absolute before:top-0 before:-left-[30px] before:w-px before:h-full before:bg-[#383838]' : ''} after:content-[""] after:absolute after:top-[5px] after:-left-[33px] after:h-2 after:w-2 after:bg-[#ffdb70] after:rounded-full after:shadow-[0_0_0_4px_#1e1e1f,0_0_0_5px_#383838]">
-      <h4 class="text-base leading-[1.3] mb-[7px] text-white">${item.title}</h4>
-      <span class="text-[#ffdb70] font-normal leading-[1.6] block mb-2">${item.period}</span>
+      <h4 class="text-base leading-[1.3] mb-[7px] text-white">${item.title || ''}</h4>
+      <span class="text-[#ffdb70] font-normal leading-[1.6] block mb-2">${item.period || ''}</span>
       <p class="text-[rgba(255,255,255,0.84)] font-light leading-[1.6]">
-        <strong class="text-white font-medium">${item.company}</strong><br>
-        ${item.description}
+        <strong class="text-white font-medium">${item.company || ''}</strong><br>
+        ${item.description || ''}
       </p>
     </li>
-  `).join('');
+  `;
+  }).join('');
+  
+  console.log('Experience rendering complete. Container innerHTML length:', container.innerHTML.length);
 }
 
 function renderEducation() {
@@ -436,10 +465,29 @@ function renderProfile() {
 function openProjectModal(project) {
   const modalContainer = document.getElementById('project-modal-container');
   const modalContent = document.getElementById('project-modal-content');
-
+  
   if (!modalContainer || !modalContent) return;
 
   const data = getLocalizedProject(project);
+  const details = data.details || data; // Handle nested structure
+
+  // Helper for text arrays (Background, Problem, Hypothesis)
+  const renderText = (content) => {
+    if (!content) return '';
+    return Array.isArray(content) 
+      ? content.map(text => `<p class="mb-2 text-gray-300 leading-relaxed">${text}</p>`).join('')
+      : `<p class="text-gray-300 leading-relaxed">${content}</p>`;
+  };
+
+  // Helper for lists (Actions, Results, Lessons)
+  const renderList = (items, highlight = false) => {
+    if (!items) return '';
+    const itemsArray = Array.isArray(items) ? items : [items];
+    if (itemsArray.length === 0) return '';
+    return itemsArray.map(item => 
+      `<li class="mb-1 text-gray-300 leading-relaxed">${highlight ? highlightMetrics(item) : item}</li>`
+    ).join('');
+  };
 
   modalContent.innerHTML = `
     <div class="project-modal-header">
@@ -449,7 +497,7 @@ function openProjectModal(project) {
     </div>
 
     <div class="project-modal-hero">
-      <p>${data.hero_summary}</p>
+      <p>${data.hero_summary || details.hero_summary || ''}</p>
     </div>
 
     <!-- Situation (Background) -->
@@ -458,7 +506,9 @@ function openProjectModal(project) {
         <span class="star-icon">S</span>
         <h4>${t('background')}</h4>
       </div>
-      <p class="star-content">${data.background || ''}</p>
+      <div class="star-content">
+        ${renderText(details.background)}
+      </div>
     </div>
 
     <!-- Task (Problem) -->
@@ -467,18 +517,20 @@ function openProjectModal(project) {
         <span class="star-icon">T</span>
         <h4>${t('problem')}</h4>
       </div>
-      <p class="star-content">${data.problem || ''}</p>
+      <div class="star-content">
+        ${renderText(details.problem)}
+      </div>
     </div>
 
     <!-- Hypothesis -->
-    ${data.hypothesis ? `
+    ${details.hypothesis ? `
     <div class="star-section hypothesis-section">
       <div class="star-label">
         <span class="star-icon-alt">H</span>
         <h4>가설</h4>
       </div>
       <div class="hypothesis-callout">
-        <p class="hypothesis-content">${data.hypothesis}</p>
+        ${renderText(details.hypothesis)}
       </div>
     </div>
     ` : ''}
@@ -490,7 +542,7 @@ function openProjectModal(project) {
         <h4>${t('actions')}</h4>
       </div>
       <ul class="star-list">
-        ${(data.actions || []).map(action => `<li>${action}</li>`).join('')}
+        ${renderList(details.actions)}
       </ul>
     </div>
 
@@ -501,19 +553,19 @@ function openProjectModal(project) {
         <h4>${t('results')}</h4>
       </div>
       <ul class="star-list">
-        ${(data.results || []).map(result => `<li>${highlightMetrics(result)}</li>`).join('')}
+        ${renderList(details.results, true)}
       </ul>
     </div>
 
     <!-- Lessons Learned -->
-    ${data.lesson_learned && data.lesson_learned.length > 0 ? `
+    ${details.lesson_learned ? `
     <div class="star-section star-lessons">
       <div class="star-label">
         <span class="star-icon-alt">L</span>
         <h4>${t('lessons')}</h4>
       </div>
       <ul class="star-list">
-        ${data.lesson_learned.map(lesson => `<li>${lesson}</li>`).join('')}
+        ${renderList(details.lesson_learned)}
       </ul>
     </div>
     ` : ''}
