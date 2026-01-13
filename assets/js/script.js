@@ -69,6 +69,21 @@ async function loadResumeData() {
   }
 }
 
+// Load Experience section specifically
+async function loadExperience() {
+  try {
+    const response = await fetch(RESUME_DATA_URL);
+    if (!response.ok) throw new Error('Failed to load resume.json');
+    const data = await response.json();
+    resumeData = data; // Store for other functions
+    renderExperience();
+    return true;
+  } catch (error) {
+    console.error('Error loading experience data:', error);
+    return false;
+  }
+}
+
 async function loadProfileData() {
   try {
     const response = await fetch(PROFILE_DATA_URL);
@@ -212,25 +227,25 @@ function renderResumeSections() {
 
 function renderExperience() {
   const container = document.getElementById('experience-list');
-  if (!container) return;
+  if (!container || !resumeData) return;
 
-  // Ensure it's an ol element with timeline-list class
+  // Ensure it's an ol element with Tailwind classes matching the CSS design
   if (container.tagName !== 'OL') {
     const ol = document.createElement('ol');
-    ol.className = 'timeline-list';
+    ol.className = 'text-sm ml-[45px] relative';
     ol.id = 'experience-list';
     container.parentNode.replaceChild(ol, container);
     container = ol;
   } else {
-    container.className = 'timeline-list';
+    container.className = 'text-sm ml-[45px] relative';
   }
 
-  container.innerHTML = (resumeData.experience || []).map(item => `
-    <li class="timeline-item">
-      <h4 class="h4 timeline-item-title">${item.title}</h4>
-      <span>${item.period}</span>
-      <p class="timeline-text">
-        <strong>${item.company}</strong><br>
+  container.innerHTML = (resumeData.experience || []).map((item, index, array) => `
+    <li class="relative pb-5 ${index !== array.length - 1 ? 'before:content-[""] before:absolute before:top-0 before:-left-[30px] before:w-px before:h-full before:bg-[#383838]' : ''} after:content-[""] after:absolute after:top-[5px] after:-left-[33px] after:h-2 after:w-2 after:bg-[#ffdb70] after:rounded-full after:shadow-[0_0_0_4px_#1e1e1f,0_0_0_5px_#383838]">
+      <h4 class="text-base leading-[1.3] mb-[7px] text-white">${item.title}</h4>
+      <span class="text-[#ffdb70] font-normal leading-[1.6] block mb-2">${item.period}</span>
+      <p class="text-[rgba(255,255,255,0.84)] font-light leading-[1.6]">
+        <strong class="text-white font-medium">${item.company}</strong><br>
         ${item.description}
       </p>
     </li>
@@ -681,6 +696,8 @@ document.addEventListener('DOMContentLoaded', function() {
   loadProjectsData();
   loadResumeData();
   loadProfileData();
+  // Load Experience section
+  loadExperience();
 
   // Project modal close button
   const projectModalClose = document.getElementById('project-modal-close');
