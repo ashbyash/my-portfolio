@@ -465,106 +465,115 @@ function renderProfile() {
 function openProjectModal(project) {
   const modalContainer = document.getElementById('project-modal-container');
   const modalContent = document.getElementById('project-modal-content');
-  
+
   if (!modalContainer || !modalContent) return;
 
   const data = getLocalizedProject(project);
-  const details = data.details || data; // Handle nested structure
+  
+  // 1. Resolve data source (handle nested details)
+  const details = data.details || data;
 
-  // Helper for text arrays (Background, Problem, Hypothesis)
+  // 2. Helper: Render text (handles Arrays vs Strings)
   const renderText = (content) => {
     if (!content) return '';
-    return Array.isArray(content) 
-      ? content.map(text => `<p class="mb-2 text-gray-300 leading-relaxed">${text}</p>`).join('')
-      : `<p class="text-gray-300 leading-relaxed">${content}</p>`;
+    if (Array.isArray(content)) {
+      return content.map(text => `<p class="mb-2 leading-relaxed text-gray-300">${text}</p>`).join('');
+    }
+    return `<p class="leading-relaxed text-gray-300">${content}</p>`;
   };
 
-  // Helper for lists (Actions, Results, Lessons)
+  // 3. Helper: Render lists (for Actions/Results/Background/Problem/Hypothesis)
   const renderList = (items, highlight = false) => {
     if (!items) return '';
+    // Handle both arrays and strings - convert strings to array
     const itemsArray = Array.isArray(items) ? items : [items];
     if (itemsArray.length === 0) return '';
     return itemsArray.map(item => 
-      `<li class="mb-1 text-gray-300 leading-relaxed">${highlight ? highlightMetrics(item) : item}</li>`
+      `<li class="mb-1 text-gray-300">${highlight ? highlightMetrics(item) : item}</li>`
     ).join('');
   };
 
+  // 4. Resolve Hero Image URL
+  const heroImageSrc = data.hero_image || details.hero_image;
+
   modalContent.innerHTML = `
-    <div class="project-modal-header">
-      <span class="company-badge">${project.company}</span>
-      <span class="period">${project.period}</span>
-      <h3>${data.title}</h3>
+    <div class="project-modal-header mb-6">
+      <div class="flex flex-wrap gap-2 mb-2">
+        <span class="px-3 py-1 text-xs font-bold text-black bg-[#ffdb70] rounded-full">${project.company}</span>
+        <span class="px-3 py-1 text-xs font-medium text-gray-400 border border-gray-700 rounded-full">${project.period}</span>
+      </div>
+      <h3 class="text-2xl font-bold text-white mb-2">${data.title}</h3>
     </div>
 
-    <div class="project-modal-hero">
-      <p>${data.hero_summary || details.hero_summary || ''}</p>
-    </div>
-
-    <!-- Situation (Background) -->
-    <div class="star-section">
-      <div class="star-label">
-        <span class="star-icon">S</span>
-        <h4>${t('background')}</h4>
-      </div>
-      <div class="star-content">
-        ${renderText(details.background)}
-      </div>
-    </div>
-
-    <!-- Task (Problem) -->
-    <div class="star-section">
-      <div class="star-label">
-        <span class="star-icon">T</span>
-        <h4>${t('problem')}</h4>
-      </div>
-      <div class="star-content">
-        ${renderText(details.problem)}
-      </div>
-    </div>
-
-    <!-- Hypothesis -->
-    ${details.hypothesis ? `
-    <div class="star-section hypothesis-section">
-      <div class="star-label">
-        <span class="star-icon-alt">H</span>
-        <h4>가설</h4>
-      </div>
-      <div class="hypothesis-callout">
-        ${renderText(details.hypothesis)}
-      </div>
+    ${heroImageSrc ? `
+    <div class="mb-6 rounded-xl overflow-hidden border border-[#383838]">
+      <img src="${heroImageSrc}" alt="${data.title}" class="w-full h-auto object-cover" onerror="this.parentElement.style.display='none'">
     </div>
     ` : ''}
 
-    <!-- Action -->
-    <div class="star-section">
-      <div class="star-label">
-        <span class="star-icon">A</span>
-        <h4>${t('actions')}</h4>
+    <div class="project-modal-hero mb-8 p-4 bg-[#2a2a2a] rounded-xl border border-[#383838]">
+      <p class="text-lg font-medium text-white italic">"${data.hero_summary || details.hero_summary || ''}"</p>
+    </div>
+
+    <div class="star-section mb-6">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="flex items-center justify-center w-8 h-8 text-sm font-bold text-black bg-[#ffdb70] rounded-full">S</span>
+        <h4 class="text-lg font-bold text-white">${t('background')}</h4>
       </div>
-      <ul class="star-list">
+      <ul class="pl-11 list-disc list-outside ml-4 space-y-2 text-gray-300">
+        ${renderList(details.background)}
+      </ul>
+    </div>
+
+    <div class="star-section mb-6">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="flex items-center justify-center w-8 h-8 text-sm font-bold text-black bg-[#ffdb70] rounded-full">T</span>
+        <h4 class="text-lg font-bold text-white">${t('problem')}</h4>
+      </div>
+      <ul class="pl-11 list-disc list-outside ml-4 space-y-2 text-gray-300">
+        ${renderList(details.problem)}
+      </ul>
+    </div>
+
+    ${details.hypothesis ? `
+    <div class="star-section mb-6">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="flex items-center justify-center w-8 h-8 text-sm font-bold text-black bg-[#ffdb70] rounded-full">H</span>
+        <h4 class="text-lg font-bold text-white">가설</h4>
+      </div>
+      <ul class="pl-11 list-disc list-outside ml-4 space-y-2 text-gray-300">
+        ${renderList(details.hypothesis)}
+      </ul>
+    </div>
+    ` : ''}
+
+    <div class="star-section mb-6">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="flex items-center justify-center w-8 h-8 text-sm font-bold text-black bg-[#ffdb70] rounded-full">A</span>
+        <h4 class="text-lg font-bold text-white">${t('actions')}</h4>
+      </div>
+      <ul class="pl-11 list-disc list-outside ml-4 space-y-2 text-gray-300">
         ${renderList(details.actions)}
       </ul>
     </div>
 
-    <!-- Result -->
-    <div class="star-section">
-      <div class="star-label">
-        <span class="star-icon">R</span>
-        <h4>${t('results')}</h4>
+    <div class="star-section mb-6">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="flex items-center justify-center w-8 h-8 text-sm font-bold text-black bg-[#ffdb70] rounded-full">R</span>
+        <h4 class="text-lg font-bold text-white">${t('results')}</h4>
       </div>
-      <ul class="star-list">
+      <ul class="pl-11 list-disc list-outside ml-4 space-y-2 text-gray-300">
         ${renderList(details.results, true)}
       </ul>
     </div>
 
-    <!-- Lessons Learned -->
-    ${details.lesson_learned ? `
-    <div class="star-section star-lessons">
-      <div class="star-label">
-        <span class="star-icon-alt">L</span>
-        <h4>${t('lessons')}</h4>
+    ${(details.lesson_learned && details.lesson_learned.length > 0) ? `
+    <div class="star-section mb-6 pt-6 border-t border-[#383838]">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="flex items-center justify-center w-8 h-8 text-sm font-bold text-black bg-gray-400 rounded-full">L</span>
+        <h4 class="text-lg font-bold text-white">${t('lessons')}</h4>
       </div>
-      <ul class="star-list">
+      <ul class="pl-11 list-disc list-outside ml-4 space-y-2 text-gray-400 italic">
         ${renderList(details.lesson_learned)}
       </ul>
     </div>
